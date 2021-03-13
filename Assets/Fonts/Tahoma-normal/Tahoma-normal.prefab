@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: Tahoma-normal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35be0f790243a0c46b505c114d7122ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bmFont: {fileID: 4900000, guid: 16cb71f2798fe456f9071c50ec34f975, type: 3}
+  material: {fileID: 2100000, guid: 34e5a14f5d2704fb6a1a6bcddd339101, type: 2}
+  texture: {fileID: 2800000, guid: b926cb75123fa4b9886629b3b0cec30c, type: 3}
+  gradientTexture: {fileID: 0}
+  dupeCaps: 0
+  flipTextureY: 0
+  proxyFont: 0
+  useTk2dCamera: 0
+  targetHeight: 640
+  targetOrthoSize: 1
+  sizeDef:
+    type: 1
+    orthoSize: 10
+    pixelsPerMeter: 1
+    width: 960
+    height: 640
+  gradientCount: 1
+  manageMaterial: 1
+  loadable: 0
+  charPadX: 0
+  data: {fileID: 11400000, guid: 4c3b3bc397d3745d3b65febb7b96d311, type: 3}
+  version: 1
