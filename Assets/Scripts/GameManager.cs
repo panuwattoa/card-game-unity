@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>
 
     public void InviteBuy()
     {
-        Invite.SetActive(true);
+        popupShopInvite.Create();
     }
 
 }

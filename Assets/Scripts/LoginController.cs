@@ -97,7 +97,7 @@ public class LoginController : MonoBehaviour
     private void OnDisconnect()
     {
         textLogin.text = "ขาดการเชื่อมต่อ..";
-        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ");
+        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ", OnReconection);
 
     }
 
@@ -105,7 +105,7 @@ public class LoginController : MonoBehaviour
     private void OnConnectionFail()
     {
         textLogin.text = "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้..";
-        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ");
+        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ", OnReconection);
         // loginPannel.SetActive(true);
     }
 
@@ -121,5 +121,11 @@ public class LoginController : MonoBehaviour
         }
     }
 
-   
+
+    private async void OnReconection()
+    {
+        _ = await NakamaSessionManager.Instance.ConnectAsync();
+
+    }
+
 }

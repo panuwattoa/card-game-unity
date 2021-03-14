@@ -44,14 +44,13 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 1b2f2d0ba340841a19676924f507d4d7, type: 3}
-    totalSpriteSurfaceArea: 4403321
+    totalSpriteSurfaceArea: 4037345
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 3d341a10fc920450984f683761a1e464, type: 3}
-  - {fileID: 21300000, guid: 85ac62813bcfa4211ac64779658aecc0, type: 3}
   - {fileID: 21300000, guid: 92941183ea08b4de6906e406535ef99e, type: 3}
   - {fileID: 21300000, guid: 7872ace3dc2664a37b5618813a148479, type: 3}
   - {fileID: 21300000, guid: d535ffb65bf754dda95c3181d7389600, type: 3}
@@ -63,7 +62,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f7ee65ff8e3f54a6fa8a01a1e8bfb904, type: 3}
   m_PackedSpriteNamesToIndex:
   - roulette_icon_boxing-gloves
-  - roulette_character_sample
   - roulette_bg
   - roulette_gold
   - btn_icon_ad_bic

@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 262cdbae735c34fee811e62aed1400e5, type: 3}
-    totalSpriteSurfaceArea: 273703
+    totalSpriteSurfaceArea: 67223
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -55,7 +55,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 12fe54f7921e44ef186ed81a97b3755b, type: 3}
   - {fileID: 21300000, guid: de626cf84d37040bf8718b3a036fe66b, type: 3}
   - {fileID: 21300000, guid: c928ad39b3a514502b47fb7e488202d0, type: 3}
-  - {fileID: 21300000, guid: d6b5e75a8ca3249d48a2ce819ea5a91c, type: 3}
   - {fileID: 21300000, guid: 46c7887ab63504f78b2587e649ef3415, type: 3}
   - {fileID: 21300000, guid: 09341d2b46873401da535980ff5f7153, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -64,7 +63,6 @@ SpriteAtlas:
   - device_stat_info_bg
   - lockscreen_time_colon
   - stat_icon_wifi
-  - lockscreen_character_sample
   - stat_icon_battery_half
   - device_stat_info_bg
   m_RenderDataMap: {}

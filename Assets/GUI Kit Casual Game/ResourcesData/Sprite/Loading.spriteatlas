@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: a5c7ae76444584176b4c652704b1769a, type: 3}
-    totalSpriteSurfaceArea: 2417881
+    totalSpriteSurfaceArea: 58585
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -52,13 +52,11 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 3c211ed28a1254ad5be923faa2874f0e, type: 3}
   - {fileID: 21300000, guid: bb129f0554ce5482e97e81f0688f3a7a, type: 3}
-  - {fileID: 21300000, guid: bfd71187e5f614337ae0b4a9bcfff07f, type: 3}
   - {fileID: 21300000, guid: f9e47d48ae68e48eab6bcdcc8fcac328, type: 3}
   - {fileID: 21300000, guid: 41f68bec7506344f19c4a2960cda7eb0, type: 3}
   m_PackedSpriteNamesToIndex:
   - loading_rotate_white
   - loading_bg
-  - bg_loading
   - loading_bar_bg
   - loading_bar
   m_RenderDataMap: {}

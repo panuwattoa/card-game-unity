@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 56a193a5f86cc4901b29995e42d750dc, type: 3}
-    totalSpriteSurfaceArea: 3420735
+    totalSpriteSurfaceArea: 2855607
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -54,7 +54,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8c4e2c116f2384eb187ccc7d0d12e0f9, type: 3}
   - {fileID: 21300000, guid: c3189121f7e3342a3b2fcc2f495c9e31, type: 3}
   - {fileID: 21300000, guid: 1eb37b6167af14206ae5394f921f1ac3, type: 3}
-  - {fileID: 21300000, guid: 3b3510c1053ff4f53a25096d82d82979, type: 3}
   - {fileID: 21300000, guid: a55e47f19f24646acaab15c6d059fc57, type: 3}
   - {fileID: 21300000, guid: 64d54c438a4564adbb0fe3cd488b2e10, type: 3}
   - {fileID: 21300000, guid: b403f9149533544428c8e16b974d3134, type: 3}
@@ -84,7 +83,6 @@ SpriteAtlas:
   - skill_passive_glow
   - ability_icon_speed
   - rune_sample_1
-  - character_detail_sample
   - rune_bg
   - character_line
   - skill_lv_lock
