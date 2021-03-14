@@ -16,7 +16,6 @@ public class PlayerSlot : MonoBehaviour
     [SerializeField] private GameObject closetCrown;
     [SerializeField] private GameObject currentActive;
     [SerializeField] private Image currentBet;
-    [SerializeField] private TextMeshProUGUI beginName;
     [SerializeField] private CardSlotController cardSlotController;
     [SerializeField] private GameObject juaSim;
     [SerializeField] private GameObject notJuaSim;
@@ -42,7 +41,7 @@ public class PlayerSlot : MonoBehaviour
         textGold.text = "";
         goldOj.SetActive(true);
        // profile.gameObject.SetActive(true);
-        beginName.text = pName.Substring(0, 1);
+        //beginName.text = pName.Substring(0, 1);
         this.UUID = UUID;
     } 
 

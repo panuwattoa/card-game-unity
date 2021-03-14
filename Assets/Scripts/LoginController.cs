@@ -87,6 +87,7 @@ public class LoginController : MonoBehaviour
         if (!success.Equals("true"))
         {
             dialogUpgrade.SetActive(true);
+            popupMessage.Create("พบเวอร์ชั่นใหม่", "กรุณาอัพเดทเวอร์ชั่นใหม่");
             return;
         }
         textLogin.text = "กำลังพาท่านข้าสู่ห้องโถง..";
@@ -96,15 +97,16 @@ public class LoginController : MonoBehaviour
     private void OnDisconnect()
     {
         textLogin.text = "ขาดการเชื่อมต่อ..";
+        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ");
+
     }
 
 
     private void OnConnectionFail()
     {
         textLogin.text = "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้..";
-
-        loginPannel.SetActive(true);
-
+        popupMessage.Create("ไม่สามารถเชื่อมต่อ", "ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้\nเราอาจจะกำลังปิดปรับปรุงระบบ");
+        // loginPannel.SetActive(true);
     }
 
 

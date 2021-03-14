@@ -8,9 +8,8 @@ public class LobbyController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_userName;
     [SerializeField] private TextMeshProUGUI m_currentGold;
+    [SerializeField] private TextMeshProUGUI m_currentGem;
     [SerializeField] private TextMeshProUGUI m_uuid;
-    [SerializeField] private GameObject roomBtn;
-    [SerializeField] private GameObject roomPanel;
     [SerializeField] private GameObject popUpSetName;
     [SerializeField]
     private GameObject howto;
@@ -36,6 +35,7 @@ public class LobbyController : MonoBehaviour
             m_userName.text = nakama.Account.User.DisplayName;
         }
         m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
+        m_currentGem.text = "0";
         m_uuid.text = nakama.Account.User.Username;
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
     }

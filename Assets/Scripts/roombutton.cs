@@ -9,17 +9,15 @@ public class roombutton : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI valueText;
     [SerializeField] GameObject popupNotMoeny;
-    [SerializeField] TextMeshProUGUI online;
 
     private int roomValue;
-    private async void Start()
+    private  void Start()
     {
         if (int.TryParse(valueText.text, out int valurInt))
         {
             roomValue = valurInt;
         }
-        var value = await GameApi.GetRoomOnline(valueText.text);
-        online.text = value;
+
     }
     public async void OnClickJoinAsync()
     {

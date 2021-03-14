@@ -70,7 +70,6 @@ public class TableScene : Singleton<TableScene>
     [SerializeField] private GameObject buttonDealerJua;
     [SerializeField] private GameObject buttonDealerJubList;
     [SerializeField] private DialogResultDealer dialogDealerResult;
-    [SerializeField] private GameObject disconnect;
     [SerializeField] private GameObject howto;
     [SerializeField] private CardJakScript cardDek;
     [SerializeField] private Animator cardDekAnimator;
@@ -673,7 +672,7 @@ public class TableScene : Singleton<TableScene>
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
-            disconnect.gameObject.SetActive(true);
+            popupNetWorkError.Create();
         });
       //  Debug.LogError(ee);
     }

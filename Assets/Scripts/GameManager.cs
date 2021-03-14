@@ -9,8 +9,6 @@ using TMPro;
 public class GameManager : Singleton<GameManager>
 {
     public IMatch Match { get; set; }
-    public GameObject lert;
-    public TextMeshProUGUI Text;
     public GameObject loading;
     public GameObject Invite;
     // Start is called before the first frame update
@@ -36,9 +34,7 @@ public class GameManager : Singleton<GameManager>
         catch (System.Exception e )
         {
             loading.SetActive(false);
-
-            Text.text = e.Message;
-            lert.SetActive(true);
+            popupMessage.Create("ผิดพลาด", e.Message);
            // Debug.LogError(ex);
         }
         
@@ -56,10 +52,6 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    public void OnClickOk()
-    {
-        lert.SetActive(false);
-    }
 
 
     public void InviteBuy()
