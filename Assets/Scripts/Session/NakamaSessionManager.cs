@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Scripts.Utils;
 using WebGLSupport;
+using Facebook.Unity;
 
 namespace Scripts.Session
 {
@@ -70,6 +71,7 @@ namespace Scripts.Session
         /// Do not use this directly, use <see cref="Socket"/> instead.
         /// </summary>
         private ISocket _socket;
+        private string _facebookToken;
 
         #region Debug
 
@@ -372,6 +374,32 @@ namespace Scripts.Session
             }
         }
 
+        public async Task<AuthenticationResponse> ConnectWithGuest()
+        {
+            AuthenticationResponse response = await AuthenticateAsync();
+            switch (response)
+            {
+                case AuthenticationResponse.Authenticated:
+                    OnConnectionSuccess?.Invoke();
+                    break;
+                case AuthenticationResponse.NewAccountCreated:
+                    OnNewAccountCreated?.Invoke();
+                    OnConnectionSuccess?.Invoke();
+                    break;
+                case AuthenticationResponse.Error:
+                    OnLoginFail?.Invoke();
+                    break;
+
+                case AuthenticationResponse.ConnectionError:
+                    OnConnectionFailure?.Invoke();
+                    break;
+                default:
+                    Debug.LogError("Unhandled response received: " + response);
+                    break;
+            }
+            return response;
+        }
+
         /// <summary>
         /// This method authenticates this device using local <see cref="_deviceId"/> and initializes new session
         /// with Nakama server. If it's the first time user logs in using this device, a new account will be created
@@ -385,6 +413,11 @@ namespace Scripts.Session
             if (response == AuthenticationResponse.Error)
             {
                 return AuthenticationResponse.Error;
+            }
+
+            if (response == AuthenticationResponse.ConnectionError)
+            {
+                return AuthenticationResponse.ConnectionError;
             }
 
             Account = await GetAccountAsync();
@@ -696,6 +729,79 @@ namespace Scripts.Session
                 return false;
             }
         }
+
+
+        public void LinkFacebook()
+        {
+            List<string> permissions = new List<string>();
+            permissions.Add("public_profile");
+
+            FB.LogInWithReadPermissions(permissions, async result =>
+            {
+                try
+                {
+                    _facebookToken = result.AccessToken.TokenString;
+                     await FacebookCallbackTokenAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Error linking to facebook: " + e.Message);
+                }
+            });
+        }
+
+        private async Task FacebookCallbackTokenAsync()
+        {
+            try
+            {
+                Session = await Client.AuthenticateFacebookAsync(_facebookToken);
+                Debug.Log("Device authenticated with token:" + Session.AuthToken);
+
+                Account = await GetAccountAsync();
+                if (Account == null)
+                {
+                    OnLoginFail?.Invoke();
+                }
+
+                bool socketConnected = await ConnectSocketAsync();
+                if (socketConnected == false)
+                {
+                    OnConnectionFailure?.Invoke();
+                }
+
+                StoreSessionToken();
+                // success
+                OnConnectionSuccess?.Invoke();
+            }
+            catch (ApiResponseException e)
+            {
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.NotFound)
+                {
+                    OnLoginFail?.Invoke();
+                }
+                else if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnLoginFail?.Invoke();
+                }
+                else if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnLoginFail?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnConnectionFailure?.Invoke();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Counldn't connect to Nakama server; message: " + e);
+                OnConnectionFailure?.Invoke();
+            }
+        }
     }
+
 
 }

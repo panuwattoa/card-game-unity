@@ -5,6 +5,8 @@ using TMPro;
 using Scripts.Session;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using System;
+using GoogleMobileAds.Api;
 
 public class LoginController : MonoBehaviour
 {
@@ -18,7 +20,26 @@ public class LoginController : MonoBehaviour
 
     const string emailKey = "pokdeng-email";
     const string passwordKey = "pokdeng-password";
-
+    private void Awake()
+    {
+        try
+        {
+            MobileAds.Initialize(initStatus => { });
+#if !UNITY_EDITOR
+                    FB.Init(() =>
+                    {
+                        FB.ActivateApp();
+                    });
+#endif
+        }
+        catch (Exception e)
+        {
+            // Not supported on mac
+#if !UNITY_OSX_STANDALONE
+            Debug.LogWarning("Error initializing facebook: " + e.Message);
+#endif
+        }
+    }
     public void OnClickRegis()
     {
         Application.OpenURL(regisUrl);
@@ -43,6 +64,17 @@ public class LoginController : MonoBehaviour
     }
 
 
+    public void OnClickLoginGuest()
+    {
+        _ = NakamaSessionManager.Instance.ConnectWithGuest();
+    }
+
+    public void OnClickLoginFacebook()
+    {
+       NakamaSessionManager.Instance.LinkFacebook();
+
+    }
+
     // Start is called before the first frame update
     async void Start()
     {
@@ -56,15 +88,6 @@ public class LoginController : MonoBehaviour
 
     private void OnLoginFail()
     {
-        if (PlayerPrefs.HasKey(emailKey))
-        {
-            email.text = PlayerPrefs.GetString(emailKey);
-        }
-
-        if (PlayerPrefs.HasKey(passwordKey))
-        {
-            password.text = PlayerPrefs.GetString(passwordKey);
-        }
         loginPannel.SetActive(true);
         textLogin.text = "ไม่พบบัญชีผู้ใช้.";
 
