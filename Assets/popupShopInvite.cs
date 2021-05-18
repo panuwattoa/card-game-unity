@@ -10,7 +10,7 @@ public class popupShopInvite : MonoBehaviour
 	{
 		GameObject prefab = Resources.Load<GameObject>("Prefabs/popup/Lobby_Panel_Shop_Popup_invite");
 		GameObject o = Instantiate(prefab);
-		popupShopInvite hand = o.GetComponentInChildren<popupShopInvite>();
+		popupShopInvite hand = o.GetComponent<popupShopInvite>();
 		return hand;
 	}
 

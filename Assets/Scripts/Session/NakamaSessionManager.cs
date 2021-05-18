@@ -119,7 +119,7 @@ namespace Scripts.Session
                 {
                     // "defaultkey" should be changed when releasing the app
                     // see https://heroiclabs.com/docs/install-configuration/#socket
-                    _client = new Client("https",_ipAddress, _port, "defaultkey",  UnityWebRequestAdapter.Instance);
+                    _client = new Client("http",_ipAddress, _port, "mynewkey",  UnityWebRequestAdapter.Instance);
                 }
                 return _client;
             }
@@ -328,8 +328,8 @@ namespace Scripts.Session
         private async Task<AuthenticationResponse> RestoreTokenAsync()
         {
             // Restoring authentication token from player prefs
-            //string authToken = PlayerPrefs.GetString("nakama.authToken", null);
-            string authToken = WebGLWindowPlugin.WebGLWindowInjectLocalStorage();
+            string authToken = PlayerPrefs.GetString("nakama.authToken", null);
+           // string authToken = WebGLWindowPlugin.WebGLWindowInjectLocalStorage();
             if (string.IsNullOrWhiteSpace(authToken) == true)
             {
                 authToken = PlayerPrefs.GetString("nakama.authToken", null);
@@ -376,6 +376,7 @@ namespace Scripts.Session
 
         public async Task<AuthenticationResponse> ConnectWithGuest()
         {
+            GetDeviceId();
             AuthenticationResponse response = await AuthenticateAsync();
             switch (response)
             {

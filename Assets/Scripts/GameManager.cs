@@ -10,7 +10,6 @@ public class GameManager : Singleton<GameManager>
 {
     public IMatch Match { get; set; }
     public GameObject loading;
-    public GameObject Invite;
     // Start is called before the first frame update
     private void Start()
     {

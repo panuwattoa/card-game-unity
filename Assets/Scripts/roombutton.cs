@@ -8,7 +8,6 @@ using System;
 public class roombutton : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI valueText;
-    [SerializeField] GameObject popupNotMoeny;
 
     private int roomValue;
     private  void Start()
@@ -25,7 +24,7 @@ public class roombutton : MonoBehaviour
  
         if (gold < roomValue*5)
         {
-            popupNotMoeny.SetActive(true);
+            popupShopInvite.Create();
             // invite
             return;
         }

@@ -21194,7 +21194,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2710378848996095402}
-  - component: {fileID: 2710378848874144567}
   m_Layer: 5
   m_Name: Lobby_Panel_Shop_Popup_invite
   m_TagString: Untagged
@@ -21223,19 +21222,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2710378848874144567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2710378848996095405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a00128818eda43dfaa959b83527b255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  otherPanels: []
 --- !u!1 &2710378849030363268
 GameObject:
   m_ObjectHideFlags: 0
@@ -26111,6 +26097,7 @@ GameObject:
   - component: {fileID: 5202582911469516265}
   - component: {fileID: 100420384928201170}
   - component: {fileID: 4105889554746044641}
+  - component: {fileID: 8560599968073644005}
   m_Layer: 5
   m_Name: Lobby_Panel_Shop_Popup_invite
   m_TagString: Untagged
@@ -26209,6 +26196,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d56a4e501f5ee411e8440fe4634c0e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8560599968073644005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059268904582090692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43a90102e2d0489e89777a418741d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7758829843470009787

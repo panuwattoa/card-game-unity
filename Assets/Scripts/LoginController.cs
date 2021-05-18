@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using System;
 using GoogleMobileAds.Api;
+using Facebook.Unity;
 
 public class LoginController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LoginController : MonoBehaviour
     [SerializeField] private TMP_InputField email;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TextMeshProUGUI uuid;
+    [SerializeField] private TextMeshProUGUI version;
     [SerializeField] private GameObject dialogUpgrade;
 
     const string emailKey = "pokdeng-email";
@@ -30,6 +32,8 @@ public class LoginController : MonoBehaviour
                     {
                         FB.ActivateApp();
                     });
+#else
+        FB.Init();
 #endif
         }
         catch (Exception e)
@@ -66,24 +70,46 @@ public class LoginController : MonoBehaviour
 
     public void OnClickLoginGuest()
     {
+        loginPannel.SetActive(false);
+        textLogin.text = "กำลังร้องขอข้อมูล";
         _ = NakamaSessionManager.Instance.ConnectWithGuest();
     }
 
     public void OnClickLoginFacebook()
     {
-       NakamaSessionManager.Instance.LinkFacebook();
+        loginPannel.SetActive(false);
+        textLogin.text = "กำลังร้องขอข้อมูล facebook";
+        NakamaSessionManager.Instance.LinkFacebook();
 
     }
 
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
+        version.text = NakamaSessionManager.Instance.GameVersion.ToString();
+        textLogin.text = "กำลังเชื่อมต่อ..";
         Application.runInBackground = true;
         NakamaSessionManager.Instance.OnLoginFail += OnLoginFail;
         NakamaSessionManager.Instance.OnConnectionSuccess += OnLoginSucess;
         NakamaSessionManager.Instance.OnDisconnected += OnDisconnect;
         NakamaSessionManager.Instance.OnConnectionFailure += OnConnectionFail;
-        _ = await NakamaSessionManager.Instance.ConnectAsync();
+        StartCoroutine(OnStartConnect());
+    }
+
+    private IEnumerator OnStartConnect()
+    {
+        var i = 0;
+        while (i>= 10)
+        {
+            if (FB.IsInitialized)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(1f);
+            i++;
+        }
+       
+        _ = NakamaSessionManager.Instance.ConnectAsync();
     }
 
     private void OnLoginFail()
