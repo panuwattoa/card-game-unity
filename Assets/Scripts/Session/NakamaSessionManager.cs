@@ -376,6 +376,7 @@ namespace Scripts.Session
 
         public async Task<AuthenticationResponse> ConnectWithGuest()
         {
+
             GetDeviceId();
             AuthenticationResponse response = await AuthenticateAsync();
             switch (response)

@@ -3,6 +3,42 @@ All notable changes to this project are documented below.
 
 The format is based on [keep a changelog](http://keepachangelog.com/) and this project uses [semantic versioning](http://semver.org/).
 
+## [2.9.0] 05-17-21
+
+### Added
+- A session can be refreshed on demand with "SessionRefreshAsync" method.
+- Session and/or refresh tokens can now be disabled with a client logout.
+- The client now supports session auto-refresh using refresh tokens. This is enabled by default.
+- New socket RPC and MatchSend methods using ArraySegment to allow developers to manage memory re-use.
+- Add IAP validation APIs for purchase receipts with Apple App Store, Google Play Store, and Huawei AppGallery.
+- Add Realtime Parties feature.
+
+### Changed
+- Use lock object with socket operations instead of ConcurrentDictionary as a workaround for a Unity engine WebGL regression.
+- Avoid use of extension methods as a workaround for a Unity engine WebGL regression.
+- Unity sockets now dispatch events on Unity's main thread by default. If you have been using code to move socket message
+to the main thread (e.g., UnityMainThreadDispatcher) you may now remove that code. This new default behavior can overridden
+by passing `useMainThread: false` to `client.NewSocket`. When passed this way, sockets default to their pre-2.9 behavior
+by dispatching messages in a separate thread.
+
+### Fixed
+- Parse HTTP responses defensively in case of bad load balancer configurations.
+
+## [2.8.1] - 2021-03-16
+### Fixed
+- Fixed a bug with parsing error responses that did not contain a message or grpc code.
+### Changed
+- Made names of asmdef files more specific for easier searching inside the Unity editor.
+
+## [2.8.0] - 2021-02-19
+### Changed
+- Listing tournaments can now be done without providing start or end time filters.
+- Can now import Steam friends after authenticating or linking to a Steam account.
+
+## [2.7.1] - 2021-02-18
+### Fixed
+- HTTP Client now properly reads off timeout value.
+
 ## [2.7.0] - 2020-10-19
 ### Changed
 Update Nakama .NET dependency. See release notes: heroiclabs/nakama-dotnet@2.7.0.
@@ -133,7 +169,7 @@ Update Nakama .NET dependency. See release notes: heroiclabs/nakama-dotnet@2.6.0
 - A new Unity example scene which shows how to matchmake users.
 - New `NIds` helper class and extension methods to compare byte arrays.
 - Add new In-App Notification feature.
-- Add new In-App Purchase Validation feature.   
+- Add new In-App Purchase Validation feature.
 
 ### Changed
 - Update client to support the new batch-orientated server protocol.
