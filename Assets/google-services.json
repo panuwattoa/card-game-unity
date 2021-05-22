@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "880402650702",
+    "project_id": "pokdeng-rhythm",
+    "storage_bucket": "pokdeng-rhythm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880402650702:android:059f4eddf011d79653551f",
+        "android_client_info": {
+          "package_name": "com.rhythmstudio.pokdeng"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880402650702-9s2ol6nt2tml18fcld3ro12dt7t5hlms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3vsrmCbo7mo9xNNNPxv_SLXkps4YLZGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880402650702-9s2ol6nt2tml18fcld3ro12dt7t5hlms.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "880402650702-dgmlp3bgtgnt8a3kdqej60edontg14f8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rhythmstudio.pokdeng"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
