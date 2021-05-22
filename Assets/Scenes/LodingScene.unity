@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366f32d12ed6243e7a5b78c4d625cdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ipAddress: 34.87.57.145
+  _ipAddress: 34.126.171.13
   _port: 7350
   allowAutoRegis: 1
   GameVersion: 9

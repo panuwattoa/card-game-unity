@@ -72,7 +72,12 @@ namespace Nakama.Snippets
                 Logger = new UnityLogger()
 #endif
             };
-            Socket = Client.NewSocket();
+       
+                Socket = Client.NewSocket();
+
+            
+    
+            
         }
 
         private Task<ISession> AuthenticateAsync()
@@ -110,6 +115,7 @@ namespace Nakama.Snippets
             else
             {
                 Session = Task.FromResult(session);
+                
             }
         }
 

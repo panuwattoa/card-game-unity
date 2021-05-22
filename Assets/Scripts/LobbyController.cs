@@ -69,7 +69,10 @@ public class LobbyController : MonoBehaviour,Observer
     }
     private void OnDestroy()
     {
-        NakamaSessionManager.Instance.RemoveObserver(this);
+        if (NakamaSessionManager.Instance != null)
+        {
+            NakamaSessionManager.Instance.RemoveObserver(this);
+        }
     }
 
     public void OnClickMuteAllSound()

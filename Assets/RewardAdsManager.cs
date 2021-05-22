@@ -116,7 +116,7 @@ public class RewardAdsManager : MonoBehaviour
         try
         {
             Nakama.IApiRpc res = await GameApi.CheckAdAvaliable();
-            if (res.Equals("true"))
+            if (res.Payload.Equals("true"))
             {
                 this.rewardedAd.Show();
             }
