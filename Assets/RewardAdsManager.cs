@@ -68,11 +68,11 @@ public class RewardAdsManager : MonoBehaviour
         MonoBehaviour.print("HandleRewardedAdLoaded event received");
     }
 
-    public void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs args)
+    public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         MonoBehaviour.print(
             "HandleRewardedAdFailedToLoad event received with message: "
-                             + args.Message);
+                             + args.LoadAdError);
     }
 
     public void HandleRewardedAdOpening(object sender, EventArgs args)

@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - c24243ee832dbb5e121119521509b32b
+  - 
   appIds:
   - 816320875936206
   appLabels:
-  - App Name
+  - pokdeng
   cookie: 1
   logging: 1
   status: 1
   xfbml: 0
   frictionlessRequests: 1
-  androidKeystorePath: 
+  androidKeystorePath: "/Users/mress/Documents/rhythm/\u0E1B\u0E4A\u0E2D\u0E01\u0E40\u0E14\u0E49\u0E07/keystore.keystore"
   iosURLSuffix: 
   appLinkSchemes:
   - list: []
