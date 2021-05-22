@@ -4,6 +4,7 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
 using System;
+using Scripts.Session;
 
 public class RewardAdsManager : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class RewardAdsManager : MonoBehaviour
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded ad with the request.
-        this.rewardedAd.LoadAd(request);
+        rewardedAd.LoadAd(request);
     }
 
     public void HandleRewardedAdLoaded(object sender, EventArgs args)
@@ -70,9 +71,6 @@ public class RewardAdsManager : MonoBehaviour
 
     public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print(
-            "HandleRewardedAdFailedToLoad event received with message: "
-                             + args.LoadAdError);
     }
 
     public void HandleRewardedAdOpening(object sender, EventArgs args)
@@ -82,9 +80,7 @@ public class RewardAdsManager : MonoBehaviour
 
     public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
     {
-        MonoBehaviour.print(
-            "HandleRewardedAdFailedToShow event received with message: "
-                             + args.Message);
+        popupMessage.Create("ระบบ", "ไม่สามารถดู video ads ได้ในขณะนี้");
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args)
@@ -95,19 +91,43 @@ public class RewardAdsManager : MonoBehaviour
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
-        string type = args.Type;
-        double amount = args.Amount;
-        MonoBehaviour.print(
-            "HandleRewardedAdRewarded event received for "
-                        + amount.ToString() + " " + type);
+        Receive();
     }
 
-
+    private async void Receive()
+    {
+        var resp = await GameApi.ClaimVideoAdsReward();
+        popupMessage.Create("ระบบ", resp, Refresh);
+    }
+    private void Refresh()
+    {
+        NakamaSessionManager.Instance.Notify();
+    }
     public void UserChoseToWatchAd()
     {
         if (this.rewardedAd.IsLoaded())
         {
-            this.rewardedAd.Show();
+            CheckAds();
+        }
+    }
+
+    private async void CheckAds()
+    {
+        try
+        {
+            Nakama.IApiRpc res = await GameApi.CheckAdAvaliable();
+            if (res.Equals("true"))
+            {
+                this.rewardedAd.Show();
+            }
+            else
+            {
+                popupMessage.Create("ระบบ", res.Payload);
+            }
+        }
+        catch (Exception ex)
+        {
+            popupMessage.Create("ระบบ", "ไม่สามารถดู ads ได้ในขณะนี้");
         }
     }
 }

@@ -4,7 +4,7 @@ using Scripts.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-public class LobbyController : MonoBehaviour
+public class LobbyController : MonoBehaviour,Observer
 {
     [SerializeField] private TextMeshProUGUI m_userName;
     [SerializeField] private TextMeshProUGUI m_currentGold;
@@ -17,6 +17,7 @@ public class LobbyController : MonoBehaviour
     NakamaSessionManager nakama;
     async void Start()
     {
+    
         nakama = NakamaSessionManager.Instance;
 
         if (!NakamaSessionManager.Instance.IsConnected)
@@ -37,6 +38,7 @@ public class LobbyController : MonoBehaviour
         m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
         m_currentGem.text = "0";
         m_uuid.text = nakama.Account.User.Username;
+        nakama.AddObserver(this);
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
     }
 
@@ -67,7 +69,7 @@ public class LobbyController : MonoBehaviour
     }
     private void OnDestroy()
     {
-
+        NakamaSessionManager.Instance.RemoveObserver(this);
     }
 
     public void OnClickMuteAllSound()
@@ -88,5 +90,16 @@ public class LobbyController : MonoBehaviour
     public void OnClickDialogHowto()
     {
         howto.SetActive(true);
+    }
+
+    private async void RefreshWallet()
+    {
+        var wallet = await NakamaSessionManager.Instance.SyncAccount();
+        m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
+    }
+
+    public void Notify(Subject o)
+    {
+        RefreshWallet();
     }
 }

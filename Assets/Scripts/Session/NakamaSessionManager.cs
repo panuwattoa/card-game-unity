@@ -33,7 +33,7 @@ namespace Scripts.Session
     /// Whenever a user tries to communicate with game server it ensures that their session hasn't expired. If the
     /// session is expired the user will have to reauthenticate the session and obtain a new session.
     /// </remarks>
-    public class NakamaSessionManager : Singleton<NakamaSessionManager>
+    public class NakamaSessionManager : Singleton<NakamaSessionManager>, Subject
     {
         #region Variables
 
@@ -803,7 +803,41 @@ namespace Scripts.Session
                 OnConnectionFailure?.Invoke();
             }
         }
-    }
 
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //  Interface
+        ////////////////////////////////////////////////////////////////////////////////
+        private List<Observer> m_observers = new List<Observer>();
+
+        /// <summary>
+        /// Add observer to be notified.
+        /// </summary>
+        /// <param name="o">O.</param>
+        public void AddObserver(Observer o)
+        {
+            m_observers.Add(o);
+        }
+        /// <summary>
+        /// Remove observer from notified list.
+        /// </summary>
+        /// <param name="o">O.</param>
+        public void RemoveObserver(Observer o)
+        {
+            //int index = m_observers.Find (o); 
+            //m_observers.RemoveAt(index);
+            m_observers.Remove(o);
+        }
+        /// <summary>
+        /// Notify all added observers.
+        /// </summary>
+        public void Notify()
+        {
+            foreach (Observer o in m_observers)
+            {
+                o.Notify(this);
+            }
+        }
+    }
 
 }

@@ -45,6 +45,22 @@ public class GameApi
         Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
         return pokemonInfo;
     }
+
+    public static async Task<string> ClaimVideoAdsReward()
+    {
+        var payload = "";
+        var rpcid = "request_claim_video_reward";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<Nakama.IApiRpc> CheckAdAvaliable()
+    {
+        var payload = "";
+        var rpcid = "request_check_video_reward";
+        var response = await RpcAsync(payload, rpcid);
+        return response;
+    }
 }
 
 
