@@ -8,11 +8,14 @@ public class LobbyController : MonoBehaviour,Observer
 {
     [SerializeField] private TextMeshProUGUI m_userName;
     [SerializeField] private TextMeshProUGUI m_currentGold;
+    [SerializeField] private TextMeshProUGUI m_currentShopGold;
+
     [SerializeField] private TextMeshProUGUI m_currentGem;
     [SerializeField] private TextMeshProUGUI m_uuid;
     [SerializeField] private GameObject popUpSetName;
-    [SerializeField]
-    private GameObject howto;
+    [SerializeField]  private GameObject howto;
+    [SerializeField] private GameObject shopPannel;
+
     // Start is called before the first frame update
     NakamaSessionManager nakama;
     async void Start()
@@ -37,6 +40,7 @@ public class LobbyController : MonoBehaviour,Observer
         }
         m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
         m_currentGem.text = "0";
+        m_currentShopGold.text = m_currentGold.text;
         m_uuid.text = nakama.Account.User.Username;
         nakama.AddObserver(this);
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
@@ -99,10 +103,21 @@ public class LobbyController : MonoBehaviour,Observer
     {
         var wallet = await NakamaSessionManager.Instance.SyncAccount();
         m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
+        m_currentShopGold.text = m_currentGold.text;
     }
 
     public void Notify(Subject o)
     {
         RefreshWallet();
+    }
+
+    public void OnClickCloseShopPannel()
+    {
+        shopPannel.SetActive(false);
+    }
+
+    public void OnClickOpenShopPannel()
+    {
+        shopPannel.SetActive(true);
     }
 }

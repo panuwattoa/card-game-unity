@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:880402650702:ios:f30a289d46857ebf53551f</string>
+	<key>DATABASE_URL</key>
+	<string>https://pokdeng-rhythm-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

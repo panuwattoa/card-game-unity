@@ -6,8 +6,12 @@ using Nakama;
 using Scripts.Session;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+
 public class GameManager : Singleton<GameManager>
 {
+    public List<IapStruct> IAPProductList = new List<IapStruct>();
+
     public IMatch Match { get; set; }
     public GameObject loading;
     // Start is called before the first frame update
@@ -58,4 +62,13 @@ public class GameManager : Singleton<GameManager>
         popupShopInvite.Create();
     }
 
+}
+[Serializable]
+public class IapStruct
+{
+    public string productName;
+    public string productText;
+    [Header("--- 1 = Diamond 2 = Money 3 = Animal(TODO)")]
+    public int productType;
+    public int value;
 }

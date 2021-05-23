@@ -126,6 +126,8 @@ public class LoginController : MonoBehaviour
         uuid.text = NakamaSessionManager.Instance.Account.User.Id;
         textLogin.text = "กำลังตรวจสอบเวอร์ชั่น...";
         OnCheckVersion();
+        textLogin.text = "กำลังเตรียมข้อมูล...";
+        OnRequestIAPList();
     }
 
 
@@ -177,4 +179,21 @@ public class LoginController : MonoBehaviour
 
     }
 
+    private async void OnRequestIAPList()
+    {
+        string list = await GameApi.ReqestIAPlist();
+        var detail = IAPList.GetDetail(list);
+        IAPManager.instance.IapProduct = new List<IapStruct>();
+        foreach (var item in detail.product)
+        {
+            IapStruct iap = new IapStruct
+            {
+                productName = item.ProductID,
+                productText = item.ProductNameText,
+                productType = 1,
+                value = item.Gold
+            };
+            IAPManager.instance.IapProduct.Add(iap);
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class BetController : MonoBehaviour
 
 
 	[SerializeField] private GameObject[] m_chipObject;
-	[SerializeField] private TextMeshProUGUI m_textUserCurrentGold;
+	 private int UserCurrentGold;
 
 	[SerializeField] private TextMeshProUGUI maximumText;
 
@@ -27,9 +27,10 @@ public class BetController : MonoBehaviour
 
     private void OnEnable()
     {
-	  //  NakamaSessionManager.Instance.SyncAccount();
-		//m_textUserCurrentGold.text = PlayerWallet.GetWallet(NakamaSessionManager.Instance.Account.Wallet).gold.ToString();
-        maximumText.text = m_maximumBet.ToString();
+		//NakamaSessionManager.Instance.SyncAccount();
+		//UserCurrentGold = PlayerWallet.GetWallet(NakamaSessionManager.Instance.Account.Wallet).gold;
+        OnChangeBetValue(0);
+		maximumText.text = m_maximumBet.ToString();
 	}
 	private void UpdateTextBubbleChip()
 	{

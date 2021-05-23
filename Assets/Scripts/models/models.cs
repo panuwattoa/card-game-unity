@@ -239,3 +239,23 @@ public class PlayerJub
         return JsonUtility.FromJson<PlayerJub>(jsonString);
     }
 }
+
+[Serializable]
+public class IAPList
+{
+    public ProductGame[] product;
+    public static IAPList GetDetail(string jsonString)
+    {
+        return JsonUtility.FromJson<IAPList>(jsonString);
+    }
+} 
+
+[Serializable]
+public class ProductGame
+{
+    public string ProductID;
+    public string ProductNameText;
+    public int Gold;
+    public int Diamond;
+    public int Bonus;
+}

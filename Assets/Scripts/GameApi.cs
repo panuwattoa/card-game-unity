@@ -61,6 +61,40 @@ public class GameApi
         var response = await RpcAsync(payload, rpcid);
         return response;
     }
+
+    public static async Task<string> CheckIAPPayload(string platfrom, string receipt)
+    {
+        var payload = "{\"platfrom\": \"" + platfrom + "\",\"receipt\": \"" + receipt + "\"}";
+        var rpcid = "request_payment";
+        var response = await RpcAsync(payload, rpcid);
+        Debug.Log("playload " + response.Payload);
+        return response.Payload;
+    }
+
+    public static async Task<string> CheckSepcialIAP()
+    {
+        var payload = "";
+        var rpcid = "request_check_special_iap";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<string> ReqestIAPlist()
+    {
+        var payload = "";
+        var rpcid = "request_iap_list";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<string> BuySpecail()
+    {
+        var payload = "";
+        var rpcid = "buy_special";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
 }
 
 

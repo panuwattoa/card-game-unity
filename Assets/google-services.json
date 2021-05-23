@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "880402650702",
+    "firebase_url": "https://pokdeng-rhythm-default-rtdb.firebaseio.com",
     "project_id": "pokdeng-rhythm",
     "storage_bucket": "pokdeng-rhythm.appspot.com"
   },
