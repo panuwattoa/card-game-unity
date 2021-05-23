@@ -15,12 +15,6 @@ public class GameManager : Singleton<GameManager>
     public IMatch Match { get; set; }
     public GameObject loading;
     // Start is called before the first frame update
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-
-    }
-
 
     public async void JoinMatchRoomID(string roomID)
     {

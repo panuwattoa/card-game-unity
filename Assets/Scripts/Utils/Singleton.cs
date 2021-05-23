@@ -77,6 +77,7 @@ namespace Scripts.Utils
             {
                 Destroy(gameObject);
             }
+            DontDestroyOnLoad(gameObject);
         }
 
         /// <summary>

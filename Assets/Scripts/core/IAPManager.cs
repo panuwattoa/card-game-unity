@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Nakama.Snippets;
 using Scripts.Session;
+using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Purchasing;
 #if RECEIPT_VALIDATION
 using UnityEngine.Purchasing.Security;
 #endif
-public class IAPManager : MonoBehaviour, IStoreListener
+public class IAPManager : Singleton<IAPManager>, IStoreListener
 {
-    public static IAPManager instance;
     private static IStoreController m_StoreController;          // The Unity Purchasing system.
     private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
-    public List<IapStruct> IapProduct { get; set; }
+    public List<IapStruct> IapProduct = new List<IapStruct>();
     private Action m_callBack;
 
     // Product identifiers for all products capable of being purchased: 
@@ -28,35 +27,30 @@ public class IAPManager : MonoBehaviour, IStoreListener
     // specific mapping to Unity Purchasing's AddProduct, below.
     private GameObject m_loading;
         public bool initializeSuccess;
-        void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            DontDestroyOnLoad(gameObject);
-        }
-        
-        void Start()
-        {
-            // If we haven't set up the Unity Purchasing reference
-            if (m_StoreController == null)
-            {
-                // Begin to configure our connection to Purchasing
-                StartCoroutine(WaitProductReady());
-                
-            }
-        }
 
-        IEnumerator WaitProductReady()
-        {
-            Debug.Log("Init IAp bf ");
-            yield return new WaitUntil(() => IapProduct != null);
-            Debug.Log("Init IAp af ");
-            InitializePurchasing();
-        }
+    void Start()
+    {
+       // DontDestroyOnLoad(gameObject);
 
-        private void InitializePurchasing() 
+        //// If we haven't set up the Unity Purchasing reference
+        //if (m_StoreController == null)
+        //    {
+        //        // Begin to configure our connection to Purchasing
+        //        StartCoroutine(WaitProductReady());
+
+        //    }
+        //}
+
+        //IEnumerator WaitProductReady()
+        //{
+        //    Debug.Log("Init IAp bf ");
+        //    yield return new WaitUntil(() => IapProduct != null);
+        //    Debug.Log("Init IAp af ");
+        //    InitializePurchasing();
+        //}
+    }
+
+        public void InitializePurchasing() 
         {
             // If we have already connected to Purchasing ...
             if (IsInitialized())
@@ -72,7 +66,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
             // with its store-specific identifiers.
             foreach (var item in IapProduct)
             {
-                Debug.Log("Init IAp");
+                Debug.Log("Init IAp "+ item.productName);
                 builder.AddProduct(item.productName, ProductType.Consumable);
             }
             // And finish adding the subscription product. Notice this uses store-specific IDs, illustrating

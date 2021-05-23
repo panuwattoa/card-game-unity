@@ -91,7 +91,10 @@ public class RewardAdsManager : MonoBehaviour
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
-        Receive();
+        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+        {
+            Receive();
+        });
     }
 
     private async void Receive()

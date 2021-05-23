@@ -9,18 +9,22 @@ public class shopIconManager : MonoBehaviour
     [SerializeField] private string productID;
     [SerializeField] private bool isSpecial;
     [SerializeField] private GameObject outOfStock;
+    private bool isOut;
     // Start is called before the first frame update
     private void Awake()
     {
-        productPrice.text = IAPManager.instance.GetProductPriceFromStore(productID);
+        productPrice.text = IAPManager.Instance.GetProductPriceFromStore(productID);
     }
     void Start()
     {
-       var product = IAPManager.instance.IapProduct.Find(x => x.productName.Equals(productID));
-        productNameText.text = product.productText;
-        if(isSpecial)
+       var product = IAPManager.Instance.IapProduct.Find(x => x.productName.Equals(productID));
+        if (product != null)
         {
-            CheckSpecial();
+            productNameText.text = product.productText;
+            if (isSpecial)
+            {
+                CheckSpecial();
+            }
         }
     }
 
@@ -30,6 +34,7 @@ public class shopIconManager : MonoBehaviour
         if (resp.Equals("true"))
         {
             outOfStock.SetActive(false);
+            isOut = true;
         }
         else
         {
@@ -39,7 +44,10 @@ public class shopIconManager : MonoBehaviour
 
     public void OnClickBuy()
     {
-        IAPManager.instance.BuyProductID(productID, OnBuySuccess);
+        if (!isOut)
+        {
+            IAPManager.Instance.BuyProductID(productID, OnBuySuccess);
+        }
     }
 
 

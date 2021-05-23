@@ -183,17 +183,18 @@ public class LoginController : MonoBehaviour
     {
         string list = await GameApi.ReqestIAPlist();
         var detail = IAPList.GetDetail(list);
-        IAPManager.instance.IapProduct = new List<IapStruct>();
-        foreach (var item in detail.product)
+        IAPManager.Instance.IapProduct = new List<IapStruct>();
+        foreach (var item in detail.iap)
         {
             IapStruct iap = new IapStruct
             {
-                productName = item.ProductID,
-                productText = item.ProductNameText,
+                productName = item.product_id,
+                productText = item.product_name,
                 productType = 1,
-                value = item.Gold
+                value = item.gold
             };
-            IAPManager.instance.IapProduct.Add(iap);
+            IAPManager.Instance.IapProduct.Add(iap);
         }
+        IAPManager.Instance.InitializePurchasing();
     }
 }

@@ -38,7 +38,7 @@ public class LobbyController : MonoBehaviour,Observer
         {
             m_userName.text = nakama.Account.User.DisplayName;
         }
-        m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
+        m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold);
         m_currentGem.text = "0";
         m_currentShopGold.text = m_currentGold.text;
         m_uuid.text = nakama.Account.User.Username;
@@ -46,16 +46,7 @@ public class LobbyController : MonoBehaviour,Observer
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
     }
 
-    public void OnClickPopupBuyMoney(GameObject go)
-    {
-        Application.OpenURL("https://p8p9.app/#/deposit");
-        go.SetActive(false);
-    }
 
-    public void OnClickShop()
-    {
-        Application.OpenURL("https://p8p9.app/#/deposit");
-    }
 
     public void OnClickPopupBuyClose(GameObject go)
     {
@@ -102,7 +93,7 @@ public class LobbyController : MonoBehaviour,Observer
     private async void RefreshWallet()
     {
         var wallet = await NakamaSessionManager.Instance.SyncAccount();
-        m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold.ToString());
+        m_currentGold.text = string.Format("{0:n0}", PlayerWallet.GetWallet(wallet).gold);
         m_currentShopGold.text = m_currentGold.text;
     }
 

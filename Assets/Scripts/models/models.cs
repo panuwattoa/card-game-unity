@@ -243,7 +243,7 @@ public class PlayerJub
 [Serializable]
 public class IAPList
 {
-    public ProductGame[] product;
+    public iap[] iap;
     public static IAPList GetDetail(string jsonString)
     {
         return JsonUtility.FromJson<IAPList>(jsonString);
@@ -251,11 +251,11 @@ public class IAPList
 } 
 
 [Serializable]
-public class ProductGame
+public class iap
 {
-    public string ProductID;
-    public string ProductNameText;
-    public int Gold;
-    public int Diamond;
-    public int Bonus;
+    public string product_id;
+    public string product_name;
+    public int gold;
+    public int diamond;
+    public int bonus;
 }
