@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Scripts.Session;
 using UnityEngine;
 using Nakama.TinyJson;
+using System.Text;
+using System;
 
 public class GameApi 
 {
@@ -62,13 +64,18 @@ public class GameApi
         return response;
     }
 
-    public static async Task<string> CheckIAPPayload(string platfrom, string receipt)
+    public static async Task<string> CheckIAPPayload(string receipt)
     {
-        var payload = "{\"platfrom\": \"" + platfrom + "\",\"receipt\": \"" + receipt + "\"}";
-        var rpcid = "request_payment";
-        var response = await RpcAsync(payload, rpcid);
-        Debug.Log("playload " + response.Payload);
+        //Debug.Log("receipt " + payload);
+        var rpcid = "request_payment_apple";
+#if UNITY_ANDROID
+
+        rpcid = "request_payment_goolge";
+        var resp = IAPGoolge.GetDetail(receipt);
+        var response = await RpcAsync(resp.Payload, rpcid);
+        Debug.Log("playload sss" + resp);
         return response.Payload;
+#endif
     }
 
     public static async Task<string> CheckSepcialIAP()

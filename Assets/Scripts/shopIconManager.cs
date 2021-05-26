@@ -34,11 +34,11 @@ public class shopIconManager : MonoBehaviour
         if (resp.Equals("true"))
         {
             outOfStock.SetActive(false);
-            isOut = true;
         }
         else
         {
             outOfStock.SetActive(true);
+            isOut = true;
         }
     }
 

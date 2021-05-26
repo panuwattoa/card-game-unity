@@ -75,7 +75,7 @@ public class TableScene : Singleton<TableScene>
     [SerializeField] private Animator cardDekAnimator;
     [SerializeField] private  Button buttonCancelDealer;
     [SerializeField] private Button leaveBtn;
-
+    [SerializeField] private ChatRoomManager roomChat;
     public string RoomID { get; private set; }
     private IMatch match;
     NakamaSessionManager nakama;
@@ -98,7 +98,7 @@ public class TableScene : Singleton<TableScene>
 
     private void SendRequestRoomData()
     {
-        var newState = new Dictionary<string, string> { { "hello", "world" } }.ToJson();
+        var newState = new Dictionary<string, string> {}.ToJson();
         nakama.Socket.SendMatchStateAsync(RoomID, (long)OpCode.OpCodeJoinRequest, newState);
     }
 
@@ -323,7 +323,6 @@ public class TableScene : Singleton<TableScene>
                 case (int)OpCode.OpCodePok:
                     {
                         if (!isPlaying) return;
-                        Debug.Log("Incom op " + (OpCode)newState.OpCode);
                         var card = DealCard.GetHandCard(content);
                         seatPosition[card.Position].OpenCard(card.HandCard, (PokdengCardResult)card.CardResult, card.PointMultiply, card.Point);
 
@@ -601,11 +600,11 @@ public class TableScene : Singleton<TableScene>
         }
         playerSlot[0].OnSetTextGold(PlayerWallet.GetWallet(nakama.Account.Wallet).gold.ToString());
         leaveBtn.interactable = true;
+        roomChat.InitChat(RoomID);
     }
 
     private void BetCallBack(int chip)
     {
-        Debug.LogWarning("chip "+ chip);
         var newState = new Dictionary<string, int> { { "bet", chip } }.ToJson();
         nakama.Socket.SendMatchStateAsync(RoomID, (long)OpCode.OpCodeUserBet, newState);
     }
@@ -679,7 +678,7 @@ public class TableScene : Singleton<TableScene>
 
     public void OnClickHowTo()
     {
-        howto.SetActive(true);
+        settingmanager.Create();
     }
 
     public void OnClickMuteAllSound()
@@ -695,4 +694,11 @@ public class TableScene : Singleton<TableScene>
         var newState = new Dictionary<string, int> { }.ToJson();
         nakama.Socket.SendMatchStateAsync(RoomID, (long)OpCode.OpCodeCancelDealer, newState);
     }
+
+    public void OnClickChat()
+    {
+        roomChat.gameObject.SetActive(true);
+    }
+
+    
 }

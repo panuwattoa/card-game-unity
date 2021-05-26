@@ -5,9 +5,8 @@ using Scripts.Session;
 using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Purchasing;
-#if RECEIPT_VALIDATION
 using UnityEngine.Purchasing.Security;
-#endif
+
 public class IAPManager : Singleton<IAPManager>, IStoreListener
 {
     private static IStoreController m_StoreController;          // The Unity Purchasing system.
@@ -30,27 +29,11 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
 
     void Start()
     {
-       // DontDestroyOnLoad(gameObject);
-
-        //// If we haven't set up the Unity Purchasing reference
-        //if (m_StoreController == null)
-        //    {
-        //        // Begin to configure our connection to Purchasing
-        //        StartCoroutine(WaitProductReady());
-
-        //    }
-        //}
-
-        //IEnumerator WaitProductReady()
-        //{
-        //    Debug.Log("Init IAp bf ");
-        //    yield return new WaitUntil(() => IapProduct != null);
-        //    Debug.Log("Init IAp af ");
-        //    InitializePurchasing();
-        //}
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
-        public void InitializePurchasing() 
+    public void InitializePurchasing() 
         {
             // If we have already connected to Purchasing ...
             if (IsInitialized())
@@ -78,15 +61,6 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
             //     { kProductNameGooglePlaySubscription, GooglePlay.Name },
             // });
 
-#if RECEIPT_VALIDATION
-        string appIdentifier;
-        #if UNITY_5_6_OR_NEWER
-        appIdentifier = Application.identifier;
-        #else
-        appIdentifier = Application.bundleIdentifier;
-        #endif
-        validator = new CrossPlatformValidator(GooglePlayTangle.Data(), AppleTangle.Data(), appIdentifier);
-#endif
             // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
             // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
             UnityPurchasing.Initialize(this, builder);
@@ -224,40 +198,37 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         }
 
 
-        public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
-        {
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+    {
 
         if (m_loading != null) {
             m_loading.SetActive(false);
         }
-            CheckIAP(args);
-            m_callBack?.Invoke();
-            // Return a flag indicating whether this product has completely been received, or if the application needs 
-            // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
-            // saving purchased products to the cloud, and when that save is delayed.
+        CheckIAP(args);
+        m_callBack?.Invoke();
+        // Return a flag indicating whether this product has completely been received, or if the application needs 
+        // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
+        // saving purchased products to the cloud, and when that save is delayed.
         return PurchaseProcessingResult.Complete;
-        }
+    }
 
         private async void CheckIAP(PurchaseEventArgs args)
         {
             try
             {
-            string validate;
-#if UNITY_ANDROID
 
-            validate = await GameApi.CheckIAPPayload("google", args.purchasedProduct.receipt);
-#else
-                 validate = await GameApi.CheckIAPPayload("apple", args.purchasedProduct.receipt);
-#endif
-            popupMessage.Create("ระบบ", validate);
+                string validate;
+                validate = await GameApi.CheckIAPPayload( args.purchasedProduct.receipt);
+                popupMessage.Create("ระบบ", validate);  
 
-        }
-        catch (Exception)
-        {
-            popupMessage.Create("ระบบ", "เกิดข้อผิดพลาด code:297 \n" );
-        }
+             }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+                popupMessage.Create("ระบบ", "เกิดข้อผิดพลาด code:297 \n" );
+            }
 
-        NakamaSessionManager.Instance.Notify();
+            NakamaSessionManager.Instance.Notify();
         }
 
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)

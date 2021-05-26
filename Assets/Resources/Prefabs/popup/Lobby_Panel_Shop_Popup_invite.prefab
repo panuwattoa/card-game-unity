@@ -197,9 +197,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4105889554746044641}
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RewardAdsManager, Assembly-CSharp
+        m_MethodName: UserChoseToWatchAd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -1693881634831477616}
         m_TargetAssemblyTypeName: popupShopInvite, Assembly-CSharp
-        m_MethodName: OnClickAds
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5873,7 +5885,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4105889554746044641}
+      - m_Target: {fileID: -1693881634831477616}
         m_TargetAssemblyTypeName: popupShopInvite, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -16059,9 +16071,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4105889554746044641}
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
+        m_MethodName: OnClickOpenShopPannel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -1693881634831477616}
         m_TargetAssemblyTypeName: popupShopInvite, Assembly-CSharp
-        m_MethodName: OnClickShop
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26096,8 +26120,7 @@ GameObject:
   - component: {fileID: 4231093421172506904}
   - component: {fileID: 5202582911469516265}
   - component: {fileID: 100420384928201170}
-  - component: {fileID: 4105889554746044641}
-  - component: {fileID: 8560599968073644005}
+  - component: {fileID: -1693881634831477616}
   m_Layer: 5
   m_Name: Lobby_Panel_Shop_Popup_invite
   m_TagString: Untagged
@@ -26186,7 +26209,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4105889554746044641
+--- !u!114 &-1693881634831477616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26196,18 +26219,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d56a4e501f5ee411e8440fe4634c0e8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8560599968073644005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3059268904582090692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43a90102e2d0489e89777a418741d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7758829843470009787

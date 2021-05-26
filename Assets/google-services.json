@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:880402650702:android:059f4eddf011d79653551f",
+        "mobilesdk_app_id": "1:880402650702:android:0a038e2fbb8d02ac53551f",
         "android_client_info": {
           "package_name": "com.rhythmstudio.pokdeng"
         }
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "880402650702-dgmlp3bgtgnt8a3kdqej60edontg14f8.apps.googleusercontent.com",
+              "client_id": "880402650702-6bulsujv3ha3eqndc40de6svod34nhm7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.rhythmstudio.pokdeng"
+                "bundle_id": "com.rhythmstudio.Pokdeng"
               }
             }
           ]

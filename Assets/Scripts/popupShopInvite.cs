@@ -25,7 +25,7 @@ public class popupShopInvite : MonoBehaviour
 	}
 	public void Close()
 	{
-		Destroy(gameObject);
+		gameObject.SetActive(false);
 	}
 
 }

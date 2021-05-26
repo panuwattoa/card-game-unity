@@ -9,13 +9,13 @@ public class LobbyController : MonoBehaviour,Observer
     [SerializeField] private TextMeshProUGUI m_userName;
     [SerializeField] private TextMeshProUGUI m_currentGold;
     [SerializeField] private TextMeshProUGUI m_currentShopGold;
-
+    
     [SerializeField] private TextMeshProUGUI m_currentGem;
     [SerializeField] private TextMeshProUGUI m_uuid;
     [SerializeField] private GameObject popUpSetName;
     [SerializeField]  private GameObject howto;
     [SerializeField] private GameObject shopPannel;
-
+    [SerializeField] private GameObject chatPannel;
     // Start is called before the first frame update
     NakamaSessionManager nakama;
     async void Start()
@@ -55,9 +55,9 @@ public class LobbyController : MonoBehaviour,Observer
 
     public async void OnSetName(TMP_InputField input)
     {
-        popUpSetName.SetActive(false);
         if (!string.IsNullOrEmpty(input.text))
         {
+            popUpSetName.SetActive(false);
             await nakama.Client.UpdateAccountAsync(nakama.Session, null, input.text);
             m_userName.text = input.text;
         }
@@ -110,5 +110,15 @@ public class LobbyController : MonoBehaviour,Observer
     public void OnClickOpenShopPannel()
     {
         shopPannel.SetActive(true);
+    }
+
+    public void OnClickOpenSetting()
+    {
+        settingmanager.Create();
+    }
+
+    public void OnClickBubbleChat()
+    {
+        chatPannel.SetActive(true);
     }
 }

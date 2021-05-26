@@ -259,3 +259,25 @@ public class iap
     public int diamond;
     public int bonus;
 }
+
+[Serializable]
+public class IAPGoolge
+{
+    public string Payload;
+    public static IAPGoolge GetDetail(string jsonString)
+    {
+        return JsonUtility.FromJson<IAPGoolge>(jsonString);
+    }
+}
+
+
+[Serializable]
+public class ChatRoom
+{
+    public string name;
+    public string msg;
+    public static ChatRoom GetDetail(string jsonString)
+    {
+        return JsonUtility.FromJson<ChatRoom>(jsonString);
+    }
+}

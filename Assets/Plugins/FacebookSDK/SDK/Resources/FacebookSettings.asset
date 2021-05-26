@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 
+  - fddf5627ea0bc8176bd2f75c8a72098f
   appIds:
-  - 816320875936206
+  - '476122743647051 '
   appLabels:
   - pokdeng
   cookie: 1

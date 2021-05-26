@@ -10,11 +10,9 @@ public class popupLoading : MonoBehaviour
 
 	public static GameObject Create( Action callBack = null)
 	{
-		GameObject prefab = Resources.Load<GameObject>("Prefabs/popup/Prefabs/popup/loading");
+		GameObject prefab = Resources.Load<GameObject>("Prefabs/loading");
 		GameObject o = Instantiate(prefab);
-		popupLoading hand = o.GetComponentInChildren<popupLoading>();
 
-		hand.m_callBack = callBack;
 
 		return o;
 	}
