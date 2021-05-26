@@ -108,9 +108,9 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
                 {
                     m_loading.SetActive(true);
                 }
-                // ... look up the Product reference with the general product identifier and the Purchasing 
-                // system's products collection.
-                Product product = m_StoreController.products.WithID(productId);
+            // ... look up the Product reference with the general product identifier and the Purchasing 
+            // system's products collection.
+             Product product = m_StoreController.products.WithID(productId);
                 // If the look up found a product for this device's store and that product is ready to be sold ... 
                 if (product != null && product.availableToPurchase)
                 {
@@ -118,9 +118,10 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
                     // ... buy the product. Expect a response either through ProcessPurchase or OnPurchaseFailed 
                     // asynchronously.
                     m_StoreController.InitiatePurchase(product);
+                    if (m_loading != null) m_loading.SetActive(false);
                 }
-                // Otherwise ...
-                else
+            // Otherwise ...
+            else
                 {
                     if(m_loading!= null) m_loading.SetActive(false);
                     // ... report the product look-up failure situation  

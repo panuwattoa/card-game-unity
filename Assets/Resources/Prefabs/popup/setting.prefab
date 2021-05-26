@@ -4906,11 +4906,11 @@ RectTransform:
   m_Father: {fileID: 7534209368766450314}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4743627, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -187.68901, y: 230}
-  m_SizeDelta: {x: 243.1918, y: 0}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 12.786987, y: -84.39725}
+  m_SizeDelta: {x: -110.69391, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5752463}
 --- !u!114 &7534209367701405115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4924,11 +4924,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: -20
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 3
+  m_ChildAlignment: 1
   m_Spacing: 45.1
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -5976,7 +5976,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: https://www.facebook.com/PokdengRhythm/inbox
+          m_StringArgument: https://m.me/110044657945610
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &7534209368455083363
@@ -6304,7 +6304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0.4743627, y: 0.5}
-  m_AnchoredPosition: {x: 30.499939, y: 321.99997}
+  m_AnchoredPosition: {x: 30.5, y: 321.99997}
   m_SizeDelta: {x: -134.45142, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7534209368608922927
@@ -7237,7 +7237,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: market://details?id=com.rhythmstudio.pokdeng
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &7534209369491484212

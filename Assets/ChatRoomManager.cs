@@ -56,7 +56,7 @@ public class ChatRoomManager : MonoBehaviour
         if (!string.IsNullOrEmpty(textInput.text))
         {
             OnSend(textInput.text);
-            //textInput.text = string.Empty;
+            textInput.text = "";
         }
 
     }

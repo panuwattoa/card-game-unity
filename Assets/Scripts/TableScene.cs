@@ -368,24 +368,24 @@ public class TableScene : Singleton<TableScene>
                         if (re.Result == 1)
                         {
                             resultWin.SetActive(true);
-                            chipWinText.text = re.Chip.ToString();
+                            chipWinText.text = string.Format("{0:n0}", re.Chip); 
                             chipWinOj.gameObject.SetActive(true);
                         }
                         else if (re.Result == 2) 
                         {
                             resultLose.SetActive(true);
-                            chipLoseText.text = re.Chip.ToString();
+                            chipLoseText.text = string.Format("{0:n0}", re.Chip);
                             chipLoseOj.gameObject.SetActive(true);
 
                         }
                         else
                         {
                             resultWinWin.SetActive(true);
-                            chipWinText.text = re.Chip.ToString();
+                            chipWinText.text = string.Format("{0:n0}", re.Chip);
                             chipWinOj.gameObject.SetActive(true);
                         }
                         //NakamaSessionManager.Instance.SyncAccount();
-                        playerSlot[0].OnSetTextGold(re.CurrentChip.ToString());
+                        playerSlot[0].OnSetTextGold(re.CurrentChip);
                         break;
                     }
                 case (int)OpCode.OpBotDealerCard:
@@ -421,7 +421,7 @@ public class TableScene : Singleton<TableScene>
                         buttonDealerJubList.SetActive(false);
                         dialogDealerResult.SetData(result.DealerChipGenTotal, result.DealerWinTotal, result.DealerLostTotal, result.DealerWinName, result.DealerLostName);
                         dialogDealerResult.gameObject.SetActive(true);
-                        playerSlot[0].OnSetTextGold(result.CurrentChip.ToString());
+                        playerSlot[0].OnSetTextGold(result.CurrentChip);
                         break;
                     }
                 case (int)OpCode.OpCodeJub:
@@ -598,7 +598,7 @@ public class TableScene : Singleton<TableScene>
                 seatPosition.Add(u.Position, playerSlot[index]);
             }
         }
-        playerSlot[0].OnSetTextGold(PlayerWallet.GetWallet(nakama.Account.Wallet).gold.ToString());
+        playerSlot[0].OnSetTextGold(PlayerWallet.GetWallet(nakama.Account.Wallet).gold);
         leaveBtn.interactable = true;
         roomChat.InitChat(RoomID);
     }

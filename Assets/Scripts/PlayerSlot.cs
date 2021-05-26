@@ -54,7 +54,7 @@ public class PlayerSlot : MonoBehaviour
     //        isSetData = false;
     //    }
     //}
-    public void OnSetTextGold(string gold)
+    public void OnSetTextGold(int gold)
     {
         goldOj.SetActive(true);
         textGold.text = string.Format("{0:n0}", gold);

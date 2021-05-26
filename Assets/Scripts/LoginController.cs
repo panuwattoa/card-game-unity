@@ -138,7 +138,7 @@ public class LoginController : MonoBehaviour
         if (!success.Equals("true"))
         {
             dialogUpgrade.SetActive(true);
-            popupMessage.Create("พบเวอร์ชั่นใหม่", "กรุณาอัพเดทเวอร์ชั่นใหม่");
+            popupMessage.Create("พบเวอร์ชั่นใหม่", "กรุณาอัพเดทเวอร์ชั่นใหม่", OnInviteUpdate);
             return;
         }
         textLogin.text = "กำลังพาท่านข้าสู่ห้องโถง..";
@@ -152,6 +152,10 @@ public class LoginController : MonoBehaviour
 
     }
 
+    public void OnInviteUpdate()
+    {
+        Application.OpenURL("market://details?id=com.rhythmstudio.pokdeng");
+    }
 
     private void OnConnectionFail()
     {
