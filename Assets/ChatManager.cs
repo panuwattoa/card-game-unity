@@ -13,6 +13,10 @@ public class ChatManager : MonoBehaviour
     // Start is called before the first frame update
     private string roomname = "public-lobby";
     IChannel channel;
+    [SerializeField]
+    TextMeshProUGUI count;
+    private int countChat;
+
     async void Start()
     {
         var persistence = true;
@@ -39,6 +43,8 @@ public class ChatManager : MonoBehaviour
             {
                 go = Chatbubble.Create(msg.name, msg.msg, false,false);
             }
+            countChat++;
+            count.text = countChat.ToString();
             go.transform.SetParent(pannel.transform);
             go.transform.localScale = new Vector3(1, 1, 1);
             CheckChat();
@@ -50,6 +56,12 @@ public class ChatManager : MonoBehaviour
         {
              Destroy(pannel.transform.GetChild(0).gameObject);  
         }
+    }
+
+    private void OnDisable()
+    {
+        countChat = 0;
+        count.text = countChat.ToString();
     }
 
     public void OnClickSendMsg()

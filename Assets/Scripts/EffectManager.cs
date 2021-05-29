@@ -15,12 +15,12 @@ public class EffectManager : Singleton<EffectManager>
 
     private void Start()
     {
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySoundByName(string soundName)
     {
-        AudioClip clip = Resources.Load<AudioClip>(soundName);
+        AudioClip clip = Resources.Load<AudioClip>("sound/"+soundName);
         audio.clip = clip;
         audio.Play();
     }

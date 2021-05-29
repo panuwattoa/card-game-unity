@@ -58,6 +58,7 @@ public class BetController : MonoBehaviour
 
 	private void UpdateChipTray(int chip)
 	{
+
 		for (int i = 0; i < m_chipObject.Length; i++)
 		{
 			if (i < chip)
@@ -80,13 +81,14 @@ public class BetController : MonoBehaviour
 
 		m_chipBet = m_maximumBet / 20 * chip;
 
-		var gold = PlayerWallet.GetWallet(NakamaSessionManager.Instance.Account.Wallet).gold;
+        var gold = PlayerWallet.GetWallet(NakamaSessionManager.Instance.Account.Wallet).gold;
 
-		if (m_chipBet > gold)
+        if (m_chipBet > gold)
         {
             m_chipBet = gold;
         }
-        UpdateTextBubbleChip();
+		EffectManager.Instance.PlaySoundByName("mixkit-money-bag-drop-1989");
+		UpdateTextBubbleChip();
 
 	}
 	public void OnChangeBetValue(float value)
@@ -96,7 +98,6 @@ public class BetController : MonoBehaviour
 		Debug.Log("chip " + chip);
 		if (chip < 2)
 			chip = 2;
-
 		UpdateChipTray(chip);
 	}
 

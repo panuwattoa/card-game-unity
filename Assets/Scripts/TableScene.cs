@@ -162,12 +162,15 @@ public class TableScene : Singleton<TableScene>
                     {
                         //countdownTime.gameObject.SetActive(false);
                         //betBar.gameObject.SetActive(false);
+                        var bet = UserBet.GetUserBet(content);
+                        seatPosition[bet.Position].OnSetBetNum(bet.BetRate);
+                        EffectManager.Instance.PlaySoundByName("mixkit-money-bag-drop-1989");
                         break;
                     }
                 case (int)OpCode.OpCodeOpeningTable:
                     {
                         toast.SetActive(true);
-                        toastText.text = "กำลังรอเจ้ามือ ขอเป็นเจ้ามือสิ..";
+                        toastText.text = "เกมกำลังจะเริ่ม..";
                         break;
                     }
                 case (int)OpCode.OpCodeSetDealer:

@@ -10,8 +10,11 @@ public class ChatRoomManager : MonoBehaviour
 {
     [SerializeField] GameObject pannel;
     [SerializeField] TMP_InputField textInput;
+    [SerializeField]
+    TextMeshProUGUI count;
     // Start is called before the first frame update
     IChannel channel;
+    private int countChat;
    public async void InitChat(string roomID)
     {
         var persistence = true;
@@ -40,9 +43,18 @@ public class ChatRoomManager : MonoBehaviour
             }
             go.transform.SetParent(pannel.transform);
             go.transform.localScale = new Vector3(1, 1, 1);
+            countChat++;
+            count.text = countChat.ToString();
             CheckChat();
         });
     }
+
+    private void OnDisable()
+    {
+        countChat = 0;
+        count.text = countChat.ToString();
+    }
+
     private void CheckChat()
     {
         if (pannel.transform.childCount > 10 )

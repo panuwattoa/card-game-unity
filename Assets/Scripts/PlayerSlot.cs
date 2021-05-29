@@ -20,6 +20,8 @@ public class PlayerSlot : MonoBehaviour
     [SerializeField] private GameObject juaSim;
     [SerializeField] private GameObject notJuaSim;
     [SerializeField] private GameObject jub;
+    [SerializeField] private GameObject betNum;
+    [SerializeField] private TextMeshProUGUI betNumText;
 
     public int position { get; private set; }
     public bool m_isMyPlayerSlot { get; private set; }
@@ -173,6 +175,17 @@ public class PlayerSlot : MonoBehaviour
             closetCrown.SetActive(false);
         }
         currentActive.SetActive(false);
+        if (betNum != null)
+        {
+            betNum.SetActive(false);
+
+        }
+    }
+
+    public void OnSetBetNum(int num)
+    {
+        betNum.SetActive(true);
+        betNumText.text = ConvertNumber(num);
     }
     public void RemovePlayer()
     {
@@ -180,5 +193,13 @@ public class PlayerSlot : MonoBehaviour
         this.playerName.gameObject.SetActive(false);
         profile.gameObject.SetActive(false);
         goldOj.SetActive(false);
+    }
+
+    public string ConvertNumber(int num)
+    {
+        if (num >= 1000)
+            return string.Concat(num / 1000, "k");
+        else
+            return num.ToString();
     }
 }
