@@ -737,7 +737,7 @@ namespace Scripts.Session
         {
             List<string> permissions = new List<string>();
             permissions.Add("public_profile");
-
+            permissions.Add("email");
             FB.LogInWithReadPermissions(permissions, async result =>
             {
                 try
