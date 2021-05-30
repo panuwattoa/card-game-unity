@@ -87,7 +87,7 @@ public class BetController : MonoBehaviour
         {
             m_chipBet = gold;
         }
-		EffectManager.Instance.PlaySoundByName("mixkit-money-bag-drop-1989");
+		EffectManager.Instance.PlaySoundByName("coid-cut");
 		UpdateTextBubbleChip();
 
 	}

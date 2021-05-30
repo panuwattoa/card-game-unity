@@ -16,6 +16,8 @@ public class LobbyController : MonoBehaviour,Observer
     [SerializeField]  private GameObject howto;
     [SerializeField] private GameObject shopPannel;
     [SerializeField] private GameObject chatPannel;
+    [SerializeField] private GameObject invitBuy;
+
     // Start is called before the first frame update
     NakamaSessionManager nakama;
     async void Start()
@@ -44,6 +46,10 @@ public class LobbyController : MonoBehaviour,Observer
         m_uuid.text = nakama.Account.User.Username;
         nakama.AddObserver(this);
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
+        if (PlayerWallet.GetWallet(wallet).gold <= 250)
+        {
+            invitBuy.SetActive(true);
+        }
     }
 
 

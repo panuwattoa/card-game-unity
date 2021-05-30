@@ -49,6 +49,28 @@ public class ChatRoomManager : MonoBehaviour
         });
     }
 
+    //private void ChantQeue(IApiChannelMessage message)
+    //{
+    //    Chatbubble go;
+    //    ChatRoom msg = ChatRoom.GetDetail(message.Content);
+    //    if (message.SenderId == NakamaSessionManager.Instance.Account.User.Id)
+    //    {
+
+    //        go = Chatbubble.Create(msg.name, msg.msg, true, true);
+    //    }
+    //    else
+    //    {
+    //        go = Chatbubble.Create(msg.name, msg.msg, false, true);
+    //    }
+    //    go.transform.SetParent(pannel.transform);
+    //    go.transform.localScale = new Vector3(1, 1, 1);
+    //    countChat++;
+    //    count.text = countChat.ToString();
+    //    CheckChat();
+    //}
+
+        
+
     private void OnDisable()
     {
         countChat = 0;

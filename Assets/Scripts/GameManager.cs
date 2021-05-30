@@ -7,6 +7,7 @@ using Scripts.Session;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.Threading.Tasks;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -39,8 +40,15 @@ public class GameManager : Singleton<GameManager>
         catch (System.Exception e )
         {
             loading.SetActive(false);
-            popupMessage.Create("ผิดพลาด", e.Message);
-           // Debug.LogError(ex);
+            // Debug.LogError(ex);
+            if (e is TaskCanceledException)
+            {
+                StartCoroutine(LoadLogin());
+            }
+            else
+            {
+                popupMessage.Create("ผิดพลาด", e.Message);
+            }
         }
         
     }
@@ -57,7 +65,14 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-
+    private IEnumerator LoadLogin()
+    {
+        var loadingOperation = SceneManager.LoadSceneAsync(0);
+        while (!loadingOperation.isDone)
+        {
+            yield return null;
+        }
+    }
 
     public void InviteBuy()
     {
