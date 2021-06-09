@@ -281,3 +281,48 @@ public class ChatRoom
         return JsonUtility.FromJson<ChatRoom>(jsonString);
     }
 }
+
+[Serializable]
+public class UserData
+{
+    public int num_special_iap;
+    public int num_daily_login;
+    public bool is_recived;
+    public int current_play;
+    public int current_play_rewarded;
+    public static UserData GetDetail(string jsonString)
+    {
+        return JsonUtility.FromJson<UserData>(jsonString);
+    }
+}
+
+[Serializable]
+public class LoginRequestData
+{
+    public DailyRewardData dailyRewardData;
+    public PlayRewardData playRewardData;
+    public static LoginRequestData GetDetail(string jsonString)
+    {
+        return JsonUtility.FromJson<LoginRequestData>(jsonString);
+    }
+}
+
+[Serializable]
+public class DailyRewardData
+{
+    public int[] reward;
+}
+
+[Serializable]
+public class PlayRewardData
+{
+    public reward[] reward;
+}
+
+
+[Serializable]
+public class reward
+{
+    public int num_round;
+    public int gold;
+}

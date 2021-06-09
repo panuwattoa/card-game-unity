@@ -43,11 +43,15 @@ public class ChatManager : MonoBehaviour
             {
                 go = Chatbubble.Create(msg.name, msg.msg, false,false);
             }
-            countChat++;
-            count.text = countChat.ToString();
-            go.transform.SetParent(pannel.transform);
-            go.transform.localScale = new Vector3(1, 1, 1);
-            CheckChat();
+            if (go != null)
+            {
+                countChat++;
+                count.text = countChat.ToString();
+                go.transform.SetParent(pannel.transform);
+                go.transform.localScale = new Vector3(1, 1, 1);
+                CheckChat();
+            }
+   
         });
     }
     private void CheckChat()

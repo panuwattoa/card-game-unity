@@ -28,12 +28,18 @@ public class LoginController : MonoBehaviour
         {
             MobileAds.Initialize(initStatus => { });
 #if !UNITY_EDITOR
+            if (!FB.IsInitialized)
+            { 
                     FB.Init(() =>
                     {
                         FB.ActivateApp();
                     });
+            }
 #else
-        FB.Init();
+            if (!FB.IsInitialized)
+            { 
+                FB.Init();
+            }
 #endif
         }
         catch (Exception e)
@@ -70,6 +76,7 @@ public class LoginController : MonoBehaviour
 
     public void OnClickLoginGuest()
     {
+        PlayerPrefs.SetInt("logintype", (int)LoginType.Guest);
         loginPannel.SetActive(false);
         textLogin.text = "กำลังร้องขอข้อมูล";
         _ = NakamaSessionManager.Instance.ConnectWithGuest();
@@ -77,6 +84,7 @@ public class LoginController : MonoBehaviour
 
     public void OnClickLoginFacebook()
     {
+        PlayerPrefs.SetInt("logintype", (int)LoginType.Facebook);
         loginPannel.SetActive(false);
         textLogin.text = "กำลังร้องขอข้อมูล facebook";
         NakamaSessionManager.Instance.LinkFacebook();
@@ -84,7 +92,7 @@ public class LoginController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+     void Start()
     {
         version.text = NakamaSessionManager.Instance.GameVersion.ToString();
         textLogin.text = "กำลังเชื่อมต่อ..";
@@ -93,13 +101,14 @@ public class LoginController : MonoBehaviour
         NakamaSessionManager.Instance.OnConnectionSuccess += OnLoginSucess;
         NakamaSessionManager.Instance.OnDisconnected += OnDisconnect;
         NakamaSessionManager.Instance.OnConnectionFailure += OnConnectionFail;
+        //await NakamaSessionManager.Instance.ConnectAsync();
         StartCoroutine(OnStartConnect());
     }
 
     private IEnumerator OnStartConnect()
     {
         var i = 0;
-        while (i>= 10)
+        while (i >= 10)
         {
             if (FB.IsInitialized)
             {
@@ -108,7 +117,7 @@ public class LoginController : MonoBehaviour
             yield return new WaitForSeconds(1f);
             i++;
         }
-       
+
         _ = NakamaSessionManager.Instance.ConnectAsync();
     }
 
@@ -128,6 +137,7 @@ public class LoginController : MonoBehaviour
         OnCheckVersion();
         textLogin.text = "กำลังเตรียมข้อมูล...";
         OnRequestIAPList();
+        ReqestInitLoginData();
     }
 
 
@@ -181,6 +191,12 @@ public class LoginController : MonoBehaviour
     {
         _ = await NakamaSessionManager.Instance.ConnectAsync();
 
+    }
+
+    private async void ReqestInitLoginData()
+    {
+        string list = await GameApi.ReqestInitLoginData();
+        GameManager.Instance.loginRequestData = LoginRequestData.GetDetail(list);
     }
 
     private async void OnRequestIAPList()

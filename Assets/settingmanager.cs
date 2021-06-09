@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scripts.Session;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class settingmanager : MonoBehaviour
 {
 
     [SerializeField] private Slider soundSlider;
+    [SerializeField] private Button b_logout;
+
     // Start is called before the first frame update
 
     public static void Create()
@@ -21,6 +25,11 @@ public class settingmanager : MonoBehaviour
         if (PlayerPrefs.HasKey("gamebgm"))
         {
             soundSlider.value = PlayerPrefs.GetFloat("gamebgm");
+        }
+
+        if (SceneManager.GetActiveScene().name == "TableScene")
+        {
+            b_logout.interactable = false;
         }
     }
 
@@ -40,5 +49,23 @@ public class settingmanager : MonoBehaviour
     public void OnClose()
     {
         Destroy(gameObject);
+    }
+
+    public void OnClickLogout()
+    {
+        PlayerPrefs.SetString("nakama.authToken", null);
+        PlayerPrefs.SetInt("logintype", (int)LoginType.None);
+         _ =  NakamaSessionManager.Instance.DisconnectWithOutPopupAsync();
+        StartCoroutine(LoadLogin());
+    }
+
+
+    private IEnumerator LoadLogin()
+    {
+        var loadingOperation = SceneManager.LoadSceneAsync(0);
+        while (!loadingOperation.isDone)
+        {
+            yield return null;
+        }
     }
 }

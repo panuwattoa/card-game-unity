@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 public class GameManager : Singleton<GameManager>
 {
-    public List<IapStruct> IAPProductList = new List<IapStruct>();
-
+    public UserData UserData { get; private set; }
     public IMatch Match { get; set; }
     public GameObject loading;
+    public LoginRequestData loginRequestData;
+    public bool IsFirstOpen = true;
     // Start is called before the first frame update
     private void Start()
     {
@@ -43,7 +44,9 @@ public class GameManager : Singleton<GameManager>
             // Debug.LogError(ex);
             if (e is TaskCanceledException)
             {
-                StartCoroutine(LoadLogin());
+        
+                    StartCoroutine(LoadLogin());
+               
             }
             else
             {
@@ -77,6 +80,11 @@ public class GameManager : Singleton<GameManager>
     public void InviteBuy()
     {
         popupShopInvite.Create();
+    }
+
+    public void SetUserData(UserData u)
+    {
+        UserData = u;
     }
 
 }

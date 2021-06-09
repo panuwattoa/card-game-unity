@@ -13,7 +13,7 @@ public class BetController : MonoBehaviour
 	 private int UserCurrentGold;
 
 	[SerializeField] private TextMeshProUGUI maximumText;
-
+	[SerializeField] private GameObject handTour;
 	private int m_chipBet =20 ;
 	private int m_maximumBet = 200;
 	private Action<int>  m_callBack;
@@ -31,6 +31,11 @@ public class BetController : MonoBehaviour
 		//UserCurrentGold = PlayerWallet.GetWallet(NakamaSessionManager.Instance.Account.Wallet).gold;
         OnChangeBetValue(0);
 		maximumText.text = m_maximumBet.ToString();
+		if (!PlayerPrefs.HasKey("FirstBet"))
+		{
+			handTour.SetActive(true);
+			PlayerPrefs.SetInt("FirstBet", 1);
+		}
 	}
 	private void UpdateTextBubbleChip()
 	{
@@ -106,6 +111,10 @@ public class BetController : MonoBehaviour
     {
 		m_callBack?.Invoke(m_chipBet);
 		gameObject.SetActive(false);
+		handTour.SetActive(false);
 	}
+
+
+
 
 }

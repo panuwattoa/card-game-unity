@@ -41,11 +41,14 @@ public class ChatRoomManager : MonoBehaviour
             {
                 go = Chatbubble.Create(msg.name, msg.msg, false,true);
             }
-            go.transform.SetParent(pannel.transform);
-            go.transform.localScale = new Vector3(1, 1, 1);
-            countChat++;
-            count.text = countChat.ToString();
-            CheckChat();
+            if (go != null)
+            {
+                go.transform.SetParent(pannel.transform);
+                go.transform.localScale = new Vector3(1, 1, 1);
+                countChat++;
+                count.text = countChat.ToString();
+                CheckChat();
+            }
         });
     }
 

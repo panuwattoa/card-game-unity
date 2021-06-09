@@ -17,6 +17,8 @@ public class LobbyController : MonoBehaviour,Observer
     [SerializeField] private GameObject shopPannel;
     [SerializeField] private GameObject chatPannel;
     [SerializeField] private GameObject invitBuy;
+    [SerializeField] private GameObject playReward;
+    [SerializeField] private GameObject dailyReward;
 
     // Start is called before the first frame update
     NakamaSessionManager nakama;
@@ -46,10 +48,37 @@ public class LobbyController : MonoBehaviour,Observer
         m_uuid.text = nakama.Account.User.Username;
         nakama.AddObserver(this);
         Debug.LogFormat("User wallet: '{0}'", nakama.Account.Wallet);
-        if (PlayerWallet.GetWallet(wallet).gold <= 250)
+
+        var data = await GameApi.ReqestGetUserData();
+        GameManager.Instance.SetUserData(UserData.GetDetail(data));
+        if (GameManager.Instance.IsFirstOpen)
         {
-            invitBuy.SetActive(true);
+            var dataReward = GameManager.Instance.loginRequestData.dailyRewardData;
+            if (dataReward != null)
+            {
+                if (dataReward.reward.Length > 0 && !GameManager.Instance.UserData.is_recived)
+                {
+                    dailyReward.SetActive(true);
+                }
+            }
+            var p = GameManager.Instance.loginRequestData.playRewardData;
+            if (p != null)
+            {
+                if (p.reward != null)
+                {
+                    playReward.SetActive(true);
+                }
+            }
+            GameManager.Instance.IsFirstOpen = false;
         }
+        else
+        {
+            if (PlayerWallet.GetWallet(wallet).gold <= 250)
+            {
+                invitBuy.SetActive(true);
+            }
+        }
+       
     }
 
 
@@ -127,4 +156,36 @@ public class LobbyController : MonoBehaviour,Observer
     {
         chatPannel.SetActive(true);
     }
+
+
+    public void OnClickDailyReward()
+    {
+        var data = GameManager.Instance.loginRequestData.dailyRewardData;
+        if (data != null)
+        {
+            if (data.reward.Length > 0)
+            {
+                dailyReward.SetActive(true);
+                return;
+            }
+        }
+
+        popupMessage.Create("ระบบ", "หมดเวลากิจกรรม");
+
+    }
+
+    public void OnClickMission()
+    {
+        var data = GameManager.Instance.loginRequestData.playRewardData;
+        if (data != null)
+        {
+            if (data.reward.Length > 0)
+            {
+                playReward.SetActive(true);
+                return;
+            }
+        }
+        popupMessage.Create("ระบบ", "หมดเวลากิจกรรม");
+    }
+
 }

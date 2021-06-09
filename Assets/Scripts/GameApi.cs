@@ -75,8 +75,9 @@ public class GameApi
         var response = await RpcAsync(resp.Payload, rpcid);
         Debug.Log("playload sss" + resp);
         return response.Payload;
-#endif
+#else
         return "";
+#endif
     }
 
     public static async Task<string> CheckSepcialIAP()
@@ -103,6 +104,38 @@ public class GameApi
         return response.Payload;
     }
 
+    public static async Task<string> ReqestGetUserData()
+    {
+        var payload = "";
+        var rpcid = "request_check_user_data";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<string> ReqestClaimPlayReward()
+    {
+        var payload = "";
+        var rpcid = "request_claim_play_reward";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<string> ReqestDailyReward()
+    {
+        var payload = "";
+        var rpcid = "request_claim_daily_reward";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+
+    public static async Task<string> ReqestInitLoginData()
+    {
+        var payload = "";
+        var rpcid = "request_login_data";
+        var response = await RpcAsync(payload, rpcid);
+        return response.Payload;
+    }
+    
 }
 
 

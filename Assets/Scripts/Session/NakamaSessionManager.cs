@@ -22,7 +22,12 @@ using System.Linq;
 using Scripts.Utils;
 using WebGLSupport;
 using Facebook.Unity;
-
+public enum LoginType
+{
+    None = 0,
+    Guest = 1,
+    Facebook = 2
+}
 namespace Scripts.Session
 {
 
@@ -99,7 +104,7 @@ namespace Scripts.Session
         /// To initialize the session, call <see cref="AuthenticateDeviceIdAsync"/> or <see cref="AuthenticateFacebookAsync"/> methods.
         /// To reinitialize expired session, call <see cref="Reauthenticate"/> method.
         /// </summary>
-        public ISession Session { get; private set; }
+        public ISession Session { get;  set; }
 
         /// <summary>
         /// Contains all the identifying data of a <see cref="Client"/>, like User Id, linked Device IDs,
@@ -179,7 +184,7 @@ namespace Scripts.Session
         public event Action OnConnectionFailure = delegate { Debug.Log(">> Connection Error"); };
 
         /// <summary>
-        /// Invoked after <see cref="Disconnect"/> is called.
+        /// Invoked after <see cref="DisconnectAsync"/> is called.
         /// </summary>
         public event Action OnDisconnected = delegate { Debug.Log(">> Disconnected"); };
 
@@ -212,7 +217,7 @@ namespace Scripts.Session
         /// </summary>
         protected override void OnDestroy()
         {
-            Disconnect();
+            _ = DisconnectAsync();
         }
 
         #endregion
@@ -245,9 +250,22 @@ namespace Scripts.Session
                     OnConnectionSuccess?.Invoke();
                     break;
                 case AuthenticationResponse.Error:
+                    if  (PlayerPrefs.HasKey("logintype"))
+                    {
+                        int type = PlayerPrefs.GetInt("logintype");
+                        if (type == (int)LoginType.Facebook)
+                        {
+                            await FacebookCallbackTokenAsync();
+                            break;
+                        }
+                        else if (type == (int)LoginType.Guest)
+                        {
+                            await ConnectWithGuest();
+                            break;
+                        }
+                    }
                     OnLoginFail?.Invoke();
                     break;
-
                 case AuthenticationResponse.ConnectionError:
                     OnConnectionFailure?.Invoke();
                     break;
@@ -345,6 +363,7 @@ namespace Scripts.Session
                 Session = Nakama.Session.Restore(authToken);
                 if (Session.HasExpired(DateTime.UtcNow) == true)
                 {
+                    Debug.Log("session exp");
                     // Restored session has expired
                     // Authenticating new session
                     return AuthenticationResponse.Error;
@@ -561,7 +580,7 @@ namespace Scripts.Session
         /// <summary>
         /// Removes session and account from cache, logs out of Facebook and invokes <see cref="OnDisconnected"/>.
         /// </summary>
-        public void Disconnect()
+        public async Task DisconnectAsync()
         {
 
             if (Session == null)
@@ -572,9 +591,45 @@ namespace Scripts.Session
             {
                 Session = null;
                 Account = null;
-
+                try
+                {
+                    if (_socket != null)
+                    {
+                        await _socket.CloseAsync();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Couldn't disconnect the socket: " + e);
+                }
                 Debug.Log("Disconnected from Nakama");
                 OnDisconnected.Invoke();
+            }
+        }
+
+        public async Task DisconnectWithOutPopupAsync()
+        {
+
+            if (Session == null)
+            {
+                return;
+            }
+            else
+            {
+                Session = null;
+                Account = null;
+                try
+                {
+                    if (_socket != null)
+                    {
+                        await _socket.CloseAsync();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Couldn't disconnect the socket: " + e);
+                }
+                Debug.Log("Disconnected from Nakama");
             }
         }
 
@@ -743,11 +798,13 @@ namespace Scripts.Session
                 try
                 {
                     _facebookToken = result.AccessToken.TokenString;
+                    PlayerPrefs.SetString("facebook_pokdeng_token", _facebookToken);
                      await FacebookCallbackTokenAsync();
                 }
                 catch (Exception e)
                 {
                     Debug.LogWarning("Error linking to facebook: " + e.Message);
+                    OnLoginFail?.Invoke();
                 }
             });
         }
@@ -756,6 +813,13 @@ namespace Scripts.Session
         {
             try
             {
+                if (string.IsNullOrEmpty(_facebookToken))
+                {
+                    if (PlayerPrefs.HasKey("facebook_pokdeng_token"))
+                    {
+                        _facebookToken = PlayerPrefs.GetString("facebook_pokdeng_token");
+                    }
+                }
                 Session = await Client.AuthenticateFacebookAsync(_facebookToken);
                 Debug.Log("Device authenticated with token:" + Session.AuthToken);
 
