@@ -4,6 +4,9 @@ using Scripts.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
 public class LobbyController : MonoBehaviour,Observer
 {
     [SerializeField] private TextMeshProUGUI m_userName;
@@ -19,6 +22,8 @@ public class LobbyController : MonoBehaviour,Observer
     [SerializeField] private GameObject invitBuy;
     [SerializeField] private GameObject playReward;
     [SerializeField] private GameObject dailyReward;
+    [SerializeField] private Image m_userProfile;
+    [SerializeField] private Sprite defultProfile;
 
     // Start is called before the first frame update
     NakamaSessionManager nakama;
@@ -78,7 +83,15 @@ public class LobbyController : MonoBehaviour,Observer
                 invitBuy.SetActive(true);
             }
         }
-       
+
+        if(!string.IsNullOrWhiteSpace(nakama.Account.User.FacebookId))
+        {
+            StartCoroutine(GetProfileTexture(nakama.Account.User.FacebookId));
+        }
+        else
+        {
+            m_userProfile.sprite = defultProfile;
+        }
     }
 
 
@@ -186,6 +199,23 @@ public class LobbyController : MonoBehaviour,Observer
             }
         }
         popupMessage.Create("ระบบ", "หมดเวลากิจกรรม");
+    }
+
+    IEnumerator GetProfileTexture(string facebookID)
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://graph.facebook.com/v11.0/" + facebookID + "/picture?height=200&width=200");
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Sprite sprite = Sprite.Create((Texture2D)myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
+            m_userProfile.sprite = sprite;
+        }
     }
 
 }

@@ -112,6 +112,10 @@ public class RewardAdsManager : MonoBehaviour
         {
             CheckAds();
         }
+        else
+        {
+            OnLoadAd();
+        }
     }
 
     private async void CheckAds()

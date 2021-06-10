@@ -82,9 +82,12 @@ public class ChatRoomManager : MonoBehaviour
 
     private void CheckChat()
     {
-        if (pannel.transform.childCount > 10 )
+        if (pannel != null)
         {
-             Destroy(pannel.transform.GetChild(0).gameObject);  
+            if (pannel.transform.childCount > 10)
+            {
+                Destroy(pannel.transform.GetChild(0).gameObject);
+            }
         }
     }
 

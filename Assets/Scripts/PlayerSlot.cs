@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Globalization;
+using Scripts.Session;
+using UnityEngine.Networking;
 
 public class PlayerSlot : MonoBehaviour
 {
@@ -15,13 +17,13 @@ public class PlayerSlot : MonoBehaviour
     [SerializeField] private GameObject closetKing;
     [SerializeField] private GameObject closetCrown;
     [SerializeField] private GameObject currentActive;
-    [SerializeField] private Image currentBet;
     [SerializeField] private CardSlotController cardSlotController;
     [SerializeField] private GameObject juaSim;
     [SerializeField] private GameObject notJuaSim;
     [SerializeField] private GameObject jub;
     [SerializeField] private GameObject betNum;
     [SerializeField] private TextMeshProUGUI betNumText;
+    [SerializeField] private Sprite profileDefult;
 
     public int position { get; private set; }
     public bool m_isMyPlayerSlot { get; private set; }
@@ -45,17 +47,42 @@ public class PlayerSlot : MonoBehaviour
        // profile.gameObject.SetActive(true);
         //beginName.text = pName.Substring(0, 1);
         this.UUID = UUID;
+        OnGetProfilePic(UUID);
     } 
 
+    private async void OnGetProfilePic(string UUID)
+    {
+        var ids = new[] { UUID };
+        var result = await NakamaSessionManager.Instance.Client.GetUsersAsync(NakamaSessionManager.Instance.Session, ids, null);
+        foreach (var u in result.Users)
+        {
+            Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.FacebookId);
+            if (!string.IsNullOrWhiteSpace(u.FacebookId))
+            {
+                StartCoroutine(GetProfileTexture(u.FacebookId));
+            }
+            else
+            {
+                profile.sprite = profileDefult;
+            }
+        }
+    }
+    IEnumerator GetProfileTexture(string facebookID)
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://graph.facebook.com/v11.0/"+facebookID+"/picture?height=200&width=200");
+        yield return www.SendWebRequest();
 
-    //private void Update()
-    //{
-    //    if (isSetData)
-    //    {
- 
-    //        isSetData = false;
-    //    }
-    //}
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Sprite sprite = Sprite.Create((Texture2D)myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
+            profile.sprite = sprite;
+        }
+    }
     public void OnSetTextGold(int gold)
     {
         goldOj.SetActive(true);
@@ -191,8 +218,10 @@ public class PlayerSlot : MonoBehaviour
     {
         m_isHavePlayerSit = false;
         this.playerName.gameObject.SetActive(false);
-        profile.gameObject.SetActive(false);
+        //profile.gameObject.SetActive(false);
         goldOj.SetActive(false);
+        profile.sprite = profileDefult;
+
     }
 
     public string ConvertNumber(int num)

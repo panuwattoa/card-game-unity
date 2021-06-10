@@ -53,6 +53,7 @@ public class settingmanager : MonoBehaviour
 
     public void OnClickLogout()
     {
+        GameManager.Instance.IsFirstOpen = true;
         PlayerPrefs.SetString("nakama.authToken", null);
         PlayerPrefs.SetInt("logintype", (int)LoginType.None);
          _ =  NakamaSessionManager.Instance.DisconnectWithOutPopupAsync();

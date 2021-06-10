@@ -13134,7 +13134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1176091639}
+  profile: {fileID: 688209355}
   playerName: {fileID: 32397679}
   goldOj: {fileID: 1797580459}
   textGold: {fileID: 429066800}
@@ -13145,13 +13145,13 @@ MonoBehaviour:
   closetKing: {fileID: 1385799370}
   closetCrown: {fileID: 911142960}
   currentActive: {fileID: 1928075576}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 1268912630}
   juaSim: {fileID: 193802736}
   notJuaSim: {fileID: 1473896346}
   jub: {fileID: 1450498881}
   betNum: {fileID: 695792051}
   betNumText: {fileID: 1626481528}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &208280916
 GameObject:
   m_ObjectHideFlags: 0
@@ -19248,7 +19248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1265558608}
+  profile: {fileID: 1661935652}
   playerName: {fileID: 379444769}
   goldOj: {fileID: 1971646501}
   textGold: {fileID: 962851094}
@@ -19259,13 +19259,13 @@ MonoBehaviour:
   closetKing: {fileID: 2143362796}
   closetCrown: {fileID: 678065664}
   currentActive: {fileID: 1464548481}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 2146075879}
   juaSim: {fileID: 1276090254}
   notJuaSim: {fileID: 999912907}
   jub: {fileID: 1999335587}
   betNum: {fileID: 2085699997}
   betNumText: {fileID: 416979541}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &287572319
 GameObject:
   m_ObjectHideFlags: 0
@@ -38264,13 +38264,13 @@ MonoBehaviour:
   closetKing: {fileID: 0}
   closetCrown: {fileID: 0}
   currentActive: {fileID: 145948092}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 156279786}
   juaSim: {fileID: 0}
   notJuaSim: {fileID: 0}
   jub: {fileID: 0}
   betNum: {fileID: 0}
   betNumText: {fileID: 0}
+  profileDefult: {fileID: 0}
 --- !u!1 &558218828
 GameObject:
   m_ObjectHideFlags: 0
@@ -44882,7 +44882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1191734065}
+  profile: {fileID: 160915813}
   playerName: {fileID: 64161037}
   goldOj: {fileID: 574928020}
   textGold: {fileID: 1924497171}
@@ -44893,13 +44893,13 @@ MonoBehaviour:
   closetKing: {fileID: 1989009002}
   closetCrown: {fileID: 1357361312}
   currentActive: {fileID: 1742398141}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 1114917329}
   juaSim: {fileID: 1128950985}
   notJuaSim: {fileID: 1291709238}
   jub: {fileID: 2122087935}
   betNum: {fileID: 464156497}
   betNumText: {fileID: 2113920796}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &670656668
 GameObject:
   m_ObjectHideFlags: 0
@@ -70406,7 +70406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 488508382}
+  profile: {fileID: 1873704490}
   playerName: {fileID: 1445179318}
   goldOj: {fileID: 1814572163}
   textGold: {fileID: 985181300}
@@ -70417,13 +70417,13 @@ MonoBehaviour:
   closetKing: {fileID: 375108391}
   closetCrown: {fileID: 268683148}
   currentActive: {fileID: 330851185}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 88348345}
   juaSim: {fileID: 378645060}
   notJuaSim: {fileID: 2011162199}
   jub: {fileID: 394702722}
   betNum: {fileID: 2044167051}
   betNumText: {fileID: 2141939994}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &1093973414
 GameObject:
   m_ObjectHideFlags: 0
@@ -74021,7 +74021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1244036010}
+  profile: {fileID: 1888024802}
   playerName: {fileID: 241787610}
   goldOj: {fileID: 232065745}
   textGold: {fileID: 1827867992}
@@ -74032,13 +74032,13 @@ MonoBehaviour:
   closetKing: {fileID: 963822150}
   closetCrown: {fileID: 472664222}
   currentActive: {fileID: 1573064554}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 1706472273}
   juaSim: {fileID: 1294008068}
   notJuaSim: {fileID: 1694321709}
   jub: {fileID: 1208746962}
   betNum: {fileID: 389069256}
   betNumText: {fileID: 419944959}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &1156589839
 GameObject:
   m_ObjectHideFlags: 0
@@ -95034,7 +95034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 542832689}
+  profile: {fileID: 578607554}
   playerName: {fileID: 76776917}
   goldOj: {fileID: 1765605692}
   textGold: {fileID: 1699946861}
@@ -95045,13 +95045,13 @@ MonoBehaviour:
   closetKing: {fileID: 1816357631}
   closetCrown: {fileID: 465291637}
   currentActive: {fileID: 2051246177}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 1848040919}
   juaSim: {fileID: 692317820}
   notJuaSim: {fileID: 122608045}
   jub: {fileID: 366582019}
   betNum: {fileID: 1306413123}
   betNumText: {fileID: 1846450803}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &1488255006
 GameObject:
   m_ObjectHideFlags: 0
@@ -107566,7 +107566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e949b935dbeab4d3cb25d033b095e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1302253466}
+  profile: {fileID: 1131397273}
   playerName: {fileID: 1359788844}
   goldOj: {fileID: 236091463}
   textGold: {fileID: 1888050077}
@@ -107577,13 +107577,13 @@ MonoBehaviour:
   closetKing: {fileID: 1753031726}
   closetCrown: {fileID: 133633815}
   currentActive: {fileID: 1323617087}
-  currentBet: {fileID: 0}
   cardSlotController: {fileID: 1867770696}
   juaSim: {fileID: 664711263}
   notJuaSim: {fileID: 1182579845}
   jub: {fileID: 1591209779}
   betNum: {fileID: 1189844794}
   betNumText: {fileID: 283004341}
+  profileDefult: {fileID: 21300000, guid: 88214a3a666014e50aa619bf5a0c5aee, type: 3}
 --- !u!1 &1684796731
 GameObject:
   m_ObjectHideFlags: 0

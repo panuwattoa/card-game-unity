@@ -22,11 +22,19 @@ using System.Linq;
 using Scripts.Utils;
 using WebGLSupport;
 using Facebook.Unity;
+using AppleAuth;
+using AppleAuth.Enums;
+using System.Text;
+using AppleAuth.Interfaces;
+using AppleAuth.Extensions;
+using AppleAuth.Native;
+
 public enum LoginType
 {
     None = 0,
     Guest = 1,
-    Facebook = 2
+    Facebook = 2,
+    Apple = 3
 }
 namespace Scripts.Session
 {
@@ -77,7 +85,11 @@ namespace Scripts.Session
         /// </summary>
         private ISocket _socket;
         private string _facebookToken;
+        private string AppleUserIdKey = "AppleUserIdKey";
+        private string AppleSessionKey = "AppleSessionKey";
 
+
+        public IAppleAuthManager appleAuthManager { get; private set; }
         #region Debug
 
         [Header("Debug")]
@@ -261,6 +273,10 @@ namespace Scripts.Session
                         else if (type == (int)LoginType.Guest)
                         {
                             await ConnectWithGuest();
+                            break;
+                        }else if (type == (int)LoginType.Apple)
+                        {
+                            SigninWithApple();
                             break;
                         }
                     }
@@ -809,6 +825,117 @@ namespace Scripts.Session
             });
         }
 
+        public void SigninWithApple()
+        {
+#if UNITY_IOS
+            
+            if (PlayerPrefs.HasKey(AppleUserIdKey))
+            {
+                this.appleAuthManager.GetCredentialState(
+                PlayerPrefs.GetString(AppleUserIdKey),
+                state =>
+                {
+                    switch (state)
+                    {
+                        case CredentialState.Authorized:
+                            // User ID is still valid. Login the user.
+                           _ = AppleTokenAsync("");
+                           break;
+
+                        case CredentialState.Revoked:
+                            QuickLoginApple();
+                            break;
+
+                        case CredentialState.NotFound:
+                            QuickLoginApple();
+                            break;
+                    }
+                },
+                error =>
+                {
+                    Debug.LogErrorFormat("error", error);
+                });
+            }
+
+            QuickLoginApple();
+#endif
+        }
+
+
+        private void AuthLoginApple()
+        {
+            var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+
+            this.appleAuthManager.LoginWithAppleId(
+                loginArgs,
+                credential =>
+                {
+                    // Obtained credential, cast it to IAppleIDCredential
+                    var appleIdCredential = credential as IAppleIDCredential;
+                    if (appleIdCredential != null)
+                    {
+                        // Identity token
+                        var identityToken = Encoding.UTF8.GetString(
+                                        appleIdCredential.IdentityToken,
+                                        0,
+                                        appleIdCredential.IdentityToken.Length);
+                        PlayerPrefs.SetString(AppleSessionKey, identityToken);
+
+                        // You should save the user ID somewhere in the device
+                        var userId = appleIdCredential.User;
+                        PlayerPrefs.SetString(AppleUserIdKey, userId);
+                        _ = AppleTokenAsync(identityToken);
+
+                        // Authorization code
+                        var authorizationCode = Encoding.UTF8.GetString(
+                                        appleIdCredential.AuthorizationCode,
+                                        0,
+                                        appleIdCredential.AuthorizationCode.Length);
+
+                         // And now you have all the information to create/login a user in your system
+                      }
+                 },error =>
+                 {
+                    // Something went wrong
+                    var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                     OnLoginFail?.Invoke();
+
+                 });
+        }
+
+        private void QuickLoginApple()
+        {
+            var quickLoginArgs = new AppleAuthQuickLoginArgs();
+            this.appleAuthManager.QuickLogin(
+                quickLoginArgs,
+                credential =>
+                {
+                    // Received a valid credential!
+                    // Try casting to IAppleIDCredential or IPasswordCredential
+
+                    // Previous Apple sign in credential
+                    var appleIdCredential = credential as IAppleIDCredential;
+
+                    // Saved Keychain credential (read about Keychain Items)
+                    var passwordCredential = credential as IPasswordCredential;
+                    // Identity token
+                    var identityToken = Encoding.UTF8.GetString(
+                                    appleIdCredential.IdentityToken,
+                                    0,
+                                    appleIdCredential.IdentityToken.Length);
+                    PlayerPrefs.SetString(AppleSessionKey, identityToken);
+                    // You should save the user ID somewhere in the device
+                    var userId = appleIdCredential.User;
+                    PlayerPrefs.SetString(AppleUserIdKey, userId);
+                    _ = AppleTokenAsync(identityToken);
+                },
+                error =>
+                {
+                    // Quick login failed. The user has never used Sign in With Apple on your app. Go to login screen
+                    AuthLoginApple();
+                });
+        }
+
         private async Task FacebookCallbackTokenAsync()
         {
             try
@@ -868,7 +995,73 @@ namespace Scripts.Session
             }
         }
 
+        private async Task AppleTokenAsync(string token)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                {
+                    if (PlayerPrefs.HasKey(AppleSessionKey))
+                    {
+                        token = PlayerPrefs.GetString(AppleSessionKey);
+                    }
+                }
+                Session = await Client.AuthenticateAppleAsync(token);
+                Debug.Log("apple authenticated with token:" + Session.AuthToken);
 
+                Account = await GetAccountAsync();
+                if (Account == null)
+                {
+                    OnLoginFail?.Invoke();
+                }
+
+                bool socketConnected = await ConnectSocketAsync();
+                if (socketConnected == false)
+                {
+                    OnConnectionFailure?.Invoke();
+                }
+
+                StoreSessionToken();
+                // success
+                OnConnectionSuccess?.Invoke();
+            }
+            catch (ApiResponseException e)
+            {
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.NotFound)
+                {
+                    OnLoginFail?.Invoke();
+                }
+                else if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnLoginFail?.Invoke();
+                }
+                else if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnLoginFail?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError("An error has occured reaching Nakama server; message: " + e);
+                    OnConnectionFailure?.Invoke();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Counldn't connect to Nakama server; message: " + e);
+                OnConnectionFailure?.Invoke();
+            }
+        }
+
+
+        public void SetAppleAuth()
+        {
+            // Creates a default JSON deserializer, to transform JSON Native responses to C# instances
+            var deserializer = new PayloadDeserializer();
+            // Creates an Apple Authentication manager with the deserializer
+            appleAuthManager = new AppleAuthManager(deserializer);
+        }
         ////////////////////////////////////////////////////////////////////////////////
         //  Interface
         ////////////////////////////////////////////////////////////////////////////////
@@ -902,6 +1095,7 @@ namespace Scripts.Session
                 o.Notify(this);
             }
         }
+
     }
 
 }

@@ -8,18 +8,18 @@ using UnityEngine.SceneManagement;
 using System;
 using GoogleMobileAds.Api;
 using Facebook.Unity;
+#if UNITY_IOS
+using AppleAuth;
+using AppleAuth.Native;
+#endif
 
 public class LoginController : MonoBehaviour
 {
-    [SerializeField] private string regisUrl;
     [SerializeField] private TextMeshProUGUI textLogin;
     [SerializeField] private GameObject loginPannel;
-    [SerializeField] private TMP_InputField email;
-    [SerializeField] private TMP_InputField password;
     [SerializeField] private TextMeshProUGUI uuid;
     [SerializeField] private TextMeshProUGUI version;
-    [SerializeField] private GameObject dialogUpgrade;
-
+    [SerializeField] private GameObject loginWithApple;
     const string emailKey = "pokdeng-email";
     const string passwordKey = "pokdeng-password";
     private void Awake()
@@ -49,10 +49,12 @@ public class LoginController : MonoBehaviour
             Debug.LogWarning("Error initializing facebook: " + e.Message);
 #endif
         }
-    }
-    public void OnClickRegis()
-    {
-        Application.OpenURL(regisUrl);
+#if UNITY_IOS
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            NakamaSessionManager.Instance.SetAppleAuth();
+        }
+#endif
     }
 
     public void OnClickOpenWeb(string url)
@@ -60,17 +62,17 @@ public class LoginController : MonoBehaviour
         Application.OpenURL(url);
     }
 
-
-    public void OnClickLoginWithEmailAsync()
+    private void Update()
     {
-        if (!string.IsNullOrEmpty(email.text) && !string.IsNullOrEmpty(password.text))
+#if UNITY_IOS
+
+        // Updates the AppleAuthManager instance to execute
+        // pending callbacks inside Unity's execution loop
+        if (NakamaSessionManager.Instance.appleAuthManager != null)
         {
-            textLogin.text = "กำลังเข้าสู่ระบบ..";
-            PlayerPrefs.SetString(emailKey, email.text);
-            PlayerPrefs.SetString(passwordKey, password.text);
-            loginPannel.SetActive(false);
-            _ = NakamaSessionManager.Instance.ConnectWithEmailAsync(email.text, password.text);
+            NakamaSessionManager.Instance.appleAuthManager.Update();
         }
+#endif
     }
 
 
@@ -123,6 +125,14 @@ public class LoginController : MonoBehaviour
 
     private void OnLoginFail()
     {
+#if UNITY_IOS
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            loginWithApple.SetActive(true);
+        }
+#else
+        loginWithApple.SetActive(false);
+#endif
         loginPannel.SetActive(true);
         textLogin.text = "ไม่พบบัญชีผู้ใช้.";
 
@@ -147,7 +157,6 @@ public class LoginController : MonoBehaviour
         Debug.Log("success  " + success);
         if (!success.Equals("true"))
         {
-            dialogUpgrade.SetActive(true);
             popupMessage.Create("พบเวอร์ชั่นใหม่", "กรุณาอัพเดทเวอร์ชั่นใหม่", OnInviteUpdate);
             return;
         }
@@ -216,5 +225,13 @@ public class LoginController : MonoBehaviour
             IAPManager.Instance.IapProduct.Add(iap);
         }
         IAPManager.Instance.InitializePurchasing();
+    }
+
+    public void OnSignInWithApple()
+    {
+        PlayerPrefs.SetInt("logintype", (int)LoginType.Apple);
+        loginPannel.SetActive(false);
+        textLogin.text = "กำลังร้องขอข้อมูล";
+        NakamaSessionManager.Instance.SigninWithApple();
     }
 }

@@ -67,16 +67,19 @@ public class GameApi
     public static async Task<string> CheckIAPPayload(string receipt)
     {
         //Debug.Log("receipt " + payload);
-        var rpcid = "request_payment_apple";
 #if UNITY_ANDROID
 
-        rpcid = "request_payment_goolge";
+        var rpcid = "request_payment_goolge";
         var resp = IAPGoolge.GetDetail(receipt);
         var response = await RpcAsync(resp.Payload, rpcid);
         Debug.Log("playload sss" + resp);
         return response.Payload;
 #else
-        return "";
+        var rpcid = "request_payment_apple";
+        var resp = IAPGoolge.GetDetail(receipt);
+        var response = await RpcAsync(resp.Payload, rpcid);
+        Debug.Log("playload sss" + resp);
+        return response.Payload;
 #endif
     }
 
