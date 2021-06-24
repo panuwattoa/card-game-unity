@@ -11,6 +11,7 @@ using Facebook.Unity;
 #if UNITY_IOS
 using AppleAuth;
 using AppleAuth.Native;
+using Unity.Advertisement.IosSupport;
 #endif
 
 public class LoginController : MonoBehaviour
@@ -24,6 +25,12 @@ public class LoginController : MonoBehaviour
     const string passwordKey = "pokdeng-password";
     private void Awake()
     {
+#if UNITY_IOS
+        if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+        {
+            ATTrackingStatusBinding.RequestAuthorizationTracking();
+        }
+#endif
         try
         {
             MobileAds.Initialize(initStatus => { });

@@ -41,8 +41,6 @@ public class RewardAdsManager : MonoBehaviour
 
         // Called when an ad request has successfully loaded.
         this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-        // Called when an ad request failed to load.
-        this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
         // Called when an ad is shown.
         this.rewardedAd.OnAdOpening += HandleRewardedAdOpening;
         // Called when an ad request failed to show.
@@ -69,9 +67,7 @@ public class RewardAdsManager : MonoBehaviour
         MonoBehaviour.print("HandleRewardedAdLoaded event received");
     }
 
-    public void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs args)
-    {
-    }
+
 
     public void HandleRewardedAdOpening(object sender, EventArgs args)
     {
@@ -89,7 +85,7 @@ public class RewardAdsManager : MonoBehaviour
         OnLoadAd();
     }
 
-    public void HandleUserEarnedReward(object sender, Reward args)
+    public void HandleUserEarnedReward(object sender, EventArgs args)
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {

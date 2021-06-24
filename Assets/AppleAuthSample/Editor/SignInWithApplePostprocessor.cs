@@ -2,6 +2,7 @@
 #define UNITY_XCODE_EXTENSIONS_AVAILABLE
 #endif
 
+using System.IO;
 using AppleAuth.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -27,13 +28,26 @@ namespace AppleAuthSample.Editor
                         project.ReadFromString(System.IO.File.ReadAllText(projectPath));
                         var manager = new ProjectCapabilityManager(projectPath, "Entitlements.entitlements", null, project.GetUnityMainTargetGuid());
                         manager.AddSignInWithAppleWithCompatibility(project.GetUnityFrameworkTargetGuid());
+                
                         manager.WriteToFile();
-                    #else
+#else
                         var manager = new ProjectCapabilityManager(projectPath, "Entitlements.entitlements", PBXProject.GetUnityTargetName());
                         manager.AddSignInWithAppleWithCompatibility();
                         manager.WriteToFile();
-                    #endif
-                #endif
+#endif
+#endif
+
+                var infoPlistPath = path + "/Info.plist";
+
+                PlistDocument document = new PlistDocument();
+                document.ReadFromString(File.ReadAllText(infoPlistPath));
+
+
+                PlistElementDict elementDict = document.root;
+
+                elementDict.SetString("NSUserTrackingUsageDescription", "This identifier will be used to deliver personalized ads to you.");
+
+                File.WriteAllText(infoPlistPath, document.WriteToString());
             }
             else if (target == BuildTarget.StandaloneOSX)
             {
