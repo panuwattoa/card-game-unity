@@ -25,15 +25,16 @@ public class LoginController : MonoBehaviour
     const string passwordKey = "pokdeng-password";
     private void Awake()
     {
-#if UNITY_IOS
-        if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
-        {
-            ATTrackingStatusBinding.RequestAuthorizationTracking();
-        }
-#endif
         try
         {
+#if UNITY_IOS
+
+            while (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+            {
+                // do nothing 
+            }
             MobileAds.Initialize(initStatus => { });
+#endif
 #if !UNITY_EDITOR
             if (!FB.IsInitialized)
             { 

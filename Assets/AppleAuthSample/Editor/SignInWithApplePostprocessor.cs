@@ -45,7 +45,7 @@ namespace AppleAuthSample.Editor
 
                 PlistElementDict elementDict = document.root;
 
-                elementDict.SetString("NSUserTrackingUsageDescription", "This identifier will be used to deliver personalized ads to you.");
+                elementDict.SetString("NSUserTrackingUsageDescription", "Your data will be used to provide you a better and personalized ad experience.");
 
                 File.WriteAllText(infoPlistPath, document.WriteToString());
             }

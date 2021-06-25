@@ -19,7 +19,7 @@ public class RewardAdsManager : MonoBehaviour
         {
 #if UNITY_ANDROID
             adUnitId = "ca-app-pub-3940256099942544/5224354917";
-#elif UNITY_IPHONE
+#elif UNITY_IOS
             adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else
             adUnitId = "unexpected_platform";
@@ -29,8 +29,8 @@ public class RewardAdsManager : MonoBehaviour
         {
 #if UNITY_ANDROID
             adUnitId = "ca-app-pub-2691806243750775/2494667132";
-#elif UNITY_IPHONE
-            adUnitId = "ca-app-pub-3940256099942544/1712485313";
+#elif UNITY_IOS
+            adUnitId = "ca-app-pub-2691806243750775/5224483275";
 #else
             adUnitId = "unexpected_platform";
 #endif
@@ -82,7 +82,6 @@ public class RewardAdsManager : MonoBehaviour
     public void HandleRewardedAdClosed(object sender, EventArgs args)
     {
         MonoBehaviour.print("HandleRewardedAdClosed event received");
-        OnLoadAd();
     }
 
     public void HandleUserEarnedReward(object sender, EventArgs args)
@@ -97,6 +96,7 @@ public class RewardAdsManager : MonoBehaviour
     {
         var resp = await GameApi.ClaimVideoAdsReward();
         popupMessage.Create("ระบบ", resp, Refresh);
+        OnLoadAd();
     }
     private void Refresh()
     {
