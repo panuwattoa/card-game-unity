@@ -13,7 +13,7 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
     private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
     public List<IapStruct> IapProduct = new List<IapStruct>();
     private Action m_callBack;
-
+   [SerializeField] private GameObject shop;
     // Product identifiers for all products capable of being purchased: 
     // "convenience" general identifiers for use with Purchasing, and their store-specific identifier 
     // counterparts for use with and outside of Unity Purchasing. Define store-specific identifiers 
@@ -44,26 +44,47 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
 
             // Create a builder, first passing in a suite of Unity provided stores.
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            
-            // Add a product to sell / restore by way of its identifier, associating the general identifier
-            // with its store-specific identifiers.
-            foreach (var item in IapProduct)
-            {
-                Debug.Log("Init IAp "+ item.productName);
-                builder.AddProduct(item.productName, ProductType.Consumable);
-            }
-            // And finish adding the subscription product. Notice this uses store-specific IDs, illustrating
-            // if the Product ID was configured differently between Apple and Google stores. Also note that
-            // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
-            // // must only be referenced here. 
-            // builder.AddProduct(kProductIDSubscription, ProductType.Subscription, new IDs(){
-            //     { kProductNameAppleSubscription, AppleAppStore.Name },
-            //     { kProductNameGooglePlaySubscription, GooglePlay.Name },
-            // });
 
-            // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
-            // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
-            UnityPurchasing.Initialize(this, builder);
+        // Add a product to sell / restore by way of its identifier, associating the general identifier
+        // with its store-specific identifiers.
+        //foreach (var item in IapProduct)
+        //{
+        //    Debug.Log("Init IAp "+ item.productName);
+        //    builder.AddProduct(item.productName, ProductType.Consumable);
+        //}
+
+        builder.AddProduct("google_tvod_oc", ProductType.Consumable);
+        builder.AddProduct("google_livetv_oc", ProductType.Consumable);
+
+
+        builder.AddProduct("google_trial_rc", ProductType.Subscription);
+        builder.AddProduct("google_collection_rc", ProductType.Subscription);
+        builder.AddProduct("google_tier_rc", ProductType.Subscription);
+        builder.AddProduct("google_partner_rc", ProductType.Subscription);
+        builder.AddProduct("google_collection_rc_2", ProductType.Subscription);
+
+        
+        //builder.AddProduct("sub_test", ProductType.Subscription);
+        ////builder.AddProduct("free_trial_enable_resubscribe_none_grace_period", ProductType.Subscription);
+        //builder.AddProduct("sub_enable_resubscribe_grace_period", ProductType.Subscription);
+        //builder.AddProduct("free_trial_disable_resubscribe_none_grace_period", ProductType.Subscription);
+        //builder.AddProduct("sub_disable_resubscribe_grace_period", ProductType.Subscription);
+        //builder.AddProduct("sub_disable_resubscribe_non_grace_period", ProductType.Subscription);
+        //builder.AddProduct("sub_enable_resubscribe_non_grace_period", ProductType.Subscription);
+        //builder.AddProduct("free_trial", ProductType.Subscription);
+
+        // And finish adding the subscription product. Notice this uses store-specific IDs, illustrating
+        // if the Product ID was configured differently between Apple and Google stores. Also note that
+        // one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
+        // // must only be referenced here. 
+        // builder.AddProduct(kProductIDSubscription, ProductType.Subscription, new IDs(){
+        //     { kProductNameAppleSubscription, AppleAppStore.Name },
+        //     { kProductNameGooglePlaySubscription, GooglePlay.Name },
+        // });
+
+        // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
+        // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
+        UnityPurchasing.Initialize(this, builder);
         }
 
 
@@ -187,8 +208,12 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
 
             // Overall Purchasing system, configured with products for this application.
             m_StoreController = controller;
-            // Store specific subsystem, for accessing device-specific store features.
-            m_StoreExtensionProvider = extensions;
+        // Store specific subsystem, for accessing device-specific store features.
+       extensions.GetExtension<IGooglePlayStoreExtensions>();
+          m_StoreExtensionProvider = extensions;
+          m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedAccountId("id-test-na");
+          m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedProfileId("id-profile-na");
+        shop.SetActive(true);
         }
 
 
@@ -196,6 +221,8 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         {
             // Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
             Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+            shop.SetActive(true);
+
         }
 
 
@@ -215,21 +242,23 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
 
         private async void CheckIAP(PurchaseEventArgs args)
         {
-            try
-            {
+        Debug.Log("Got Puchase!!  :" + args.purchasedProduct.receipt);
 
-                string validate;
-                validate = await GameApi.CheckIAPPayload( args.purchasedProduct.receipt);
-                popupMessage.Create("ระบบ", validate);  
+        //try
+        //{
 
-             }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-                popupMessage.Create("ระบบ", "เกิดข้อผิดพลาด code:297 \n" );
-            }
+        //        string validate;
+        //        validate = await GameApi.CheckIAPPayload( args.purchasedProduct.receipt);
+        //        popupMessage.Create("ระบบ", validate);  
 
-            NakamaSessionManager.Instance.Notify();
+        //     }
+        //    catch (Exception e)
+        //    {
+        //        Debug.Log(e.Message);
+        //        popupMessage.Create("ระบบ", "เกิดข้อผิดพลาด code:297 \n" );
+        //    }
+
+        //    NakamaSessionManager.Instance.Notify();
         }
 
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)

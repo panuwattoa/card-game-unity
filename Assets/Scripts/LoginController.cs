@@ -25,6 +25,8 @@ public class LoginController : MonoBehaviour
     const string passwordKey = "pokdeng-password";
     private void Awake()
     {
+        OnRequestIAPList();
+
         try
         {
 #if UNITY_IOS
@@ -63,6 +65,9 @@ public class LoginController : MonoBehaviour
             NakamaSessionManager.Instance.SetAppleAuth();
         }
 #endif
+
+        //OnRequestIAPList();
+
     }
 
     public void OnClickOpenWeb(string url)
@@ -104,15 +109,15 @@ public class LoginController : MonoBehaviour
     // Start is called before the first frame update
      void Start()
     {
-        version.text = NakamaSessionManager.Instance.GameVersion.ToString();
-        textLogin.text = "กำลังเชื่อมต่อ..";
-        Application.runInBackground = true;
-        NakamaSessionManager.Instance.OnLoginFail += OnLoginFail;
-        NakamaSessionManager.Instance.OnConnectionSuccess += OnLoginSucess;
-        NakamaSessionManager.Instance.OnDisconnected += OnDisconnect;
-        NakamaSessionManager.Instance.OnConnectionFailure += OnConnectionFail;
-        //await NakamaSessionManager.Instance.ConnectAsync();
-        StartCoroutine(OnStartConnect());
+        //version.text = NakamaSessionManager.Instance.GameVersion.ToString();
+        //textLogin.text = "กำลังเชื่อมต่อ..";
+        //Application.runInBackground = true;
+        //NakamaSessionManager.Instance.OnLoginFail += OnLoginFail;
+        //NakamaSessionManager.Instance.OnConnectionSuccess += OnLoginSucess;
+        //NakamaSessionManager.Instance.OnDisconnected += OnDisconnect;
+        //NakamaSessionManager.Instance.OnConnectionFailure += OnConnectionFail;
+        ////await NakamaSessionManager.Instance.ConnectAsync();
+        //StartCoroutine(OnStartConnect());
     }
 
     private IEnumerator OnStartConnect()
@@ -216,22 +221,22 @@ public class LoginController : MonoBehaviour
         GameManager.Instance.loginRequestData = LoginRequestData.GetDetail(list);
     }
 
-    private async void OnRequestIAPList()
+    private  void OnRequestIAPList()
     {
-        string list = await GameApi.ReqestIAPlist();
-        var detail = IAPList.GetDetail(list);
-        IAPManager.Instance.IapProduct = new List<IapStruct>();
-        foreach (var item in detail.iap)
-        {
-            IapStruct iap = new IapStruct
-            {
-                productName = item.product_id,
-                productText = item.product_name,
-                productType = 1,
-                value = item.gold
-            };
-            IAPManager.Instance.IapProduct.Add(iap);
-        }
+        //string list = await GameApi.ReqestIAPlist();
+        //var detail = IAPList.GetDetail(list);
+        //IAPManager.Instance.IapProduct = new List<IapStruct>();
+        //foreach (var item in detail.iap)
+        //{
+        //    IapStruct iap = new IapStruct
+        //    {
+        //        productName = item.product_id,
+        //        productText = item.product_name,
+        //        productType = 1,
+        //        value = item.gold
+        //    };
+        //    IAPManager.Instance.IapProduct.Add(iap);
+        //}
         IAPManager.Instance.InitializePurchasing();
     }
 

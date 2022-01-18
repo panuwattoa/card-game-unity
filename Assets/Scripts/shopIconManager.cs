@@ -11,7 +11,7 @@ public class shopIconManager : MonoBehaviour
     [SerializeField] private GameObject outOfStock;
     private bool isOut;
     // Start is called before the first frame update
-    private void Awake()
+    private void OnEnable()
     {
         productPrice.text = IAPManager.Instance.GetProductPriceFromStore(productID);
     }
