@@ -8,10 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LodingScene.unity
     guid: 181f91754a17044c2aa2dfb50d3b1ee9
-  - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
-    guid: d3a52bdf89f9748eb9ca90d0868b2255
-  - enabled: 1
-    path: Assets/Scenes/TableScene.unity
-    guid: f53bf1f55b84b480f9028ee6b3986694
   m_configObjects: {}

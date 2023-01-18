@@ -21,7 +21,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Scripts.Utils;
 using WebGLSupport;
-using Facebook.Unity;
 using AppleAuth;
 using AppleAuth.Enums;
 using System.Text;
@@ -809,20 +808,6 @@ namespace Scripts.Session
             List<string> permissions = new List<string>();
             permissions.Add("public_profile");
             permissions.Add("email");
-            FB.LogInWithReadPermissions(permissions, async result =>
-            {
-                try
-                {
-                    _facebookToken = result.AccessToken.TokenString;
-                    PlayerPrefs.SetString("facebook_pokdeng_token", _facebookToken);
-                     await FacebookCallbackTokenAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogWarning("Error linking to facebook: " + e.Message);
-                    OnLoginFail?.Invoke();
-                }
-            });
         }
 
         public void SigninWithApple()

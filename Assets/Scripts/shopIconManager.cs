@@ -13,11 +13,12 @@ public class shopIconManager : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        productPrice.text = IAPManager.Instance.GetProductPriceFromStore(productID);
+        productPrice.text = IAPManager.Instance.GetProductPriceFromStore(productID.ToLower());
+        productNameText.text = productID.ToLower();
     }
     void Start()
     {
-       var product = IAPManager.Instance.IapProduct.Find(x => x.productName.Equals(productID));
+       var product = IAPManager.Instance.IapProduct.Find(x => x.productName.Equals(productID.ToLower()));
         if (product != null)
         {
             productNameText.text = product.productText;
@@ -46,10 +47,15 @@ public class shopIconManager : MonoBehaviour
     {
         if (!isOut)
         {
-            IAPManager.Instance.BuyProductID(productID, OnBuySuccess);
+            popupShopInvite.Create(OnClickBuy2);
         }
     }
 
+    public void OnClickBuy2(string uuid,string pur)
+    {
+        IAPManager.Instance.BuyProductID(productID.ToLower(), uuid, pur,OnBuySuccess);
+
+    }
 
     private void OnBuySuccess()
     {

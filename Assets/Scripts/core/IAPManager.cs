@@ -53,17 +53,17 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         //    builder.AddProduct(item.productName, ProductType.Consumable);
         //}
 
-        builder.AddProduct("google_tvod_oc", ProductType.Consumable);
-        builder.AddProduct("google_livetv_oc", ProductType.Consumable);
+        builder.AddProduct("WETV_BNN_OC_7D_ALA".ToLower(), ProductType.Consumable);
+        builder.AddProduct("EPL2223_NPN_OC_7D_ALA".ToLower(), ProductType.Consumable);
 
 
-        builder.AddProduct("google_trial_rc", ProductType.Subscription);
-        builder.AddProduct("google_collection_rc", ProductType.Subscription);
-        builder.AddProduct("google_tier_rc", ProductType.Subscription);
-        builder.AddProduct("google_partner_rc", ProductType.Subscription);
-        builder.AddProduct("google_collection_rc_2", ProductType.Subscription);
+        builder.AddProduct("PRIME_TRIAL3M_NPN_RC_EVG_ALA".ToLower(), ProductType.Subscription);
+        builder.AddProduct("TIDPLUS_TRIAL1M_BPN_RC_EVG_REG".ToLower(), ProductType.Subscription);
+        builder.AddProduct("IQIYIVIP_NPN_RC_EVG_ALA".ToLower(), ProductType.Subscription);
+        builder.AddProduct("EPL2223_MONTHLY_NPN_RC_EVG_ALA".ToLower(), ProductType.Subscription);
+        builder.AddProduct("TVSNOW_NPN_RC_EVG_ALA".ToLower(), ProductType.Subscription);
 
-        
+
         //builder.AddProduct("sub_test", ProductType.Subscription);
         ////builder.AddProduct("free_trial_enable_resubscribe_none_grace_period", ProductType.Subscription);
         //builder.AddProduct("sub_enable_resubscribe_grace_period", ProductType.Subscription);
@@ -115,7 +115,7 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         // }
 
 
-        public void BuyProductID(string productId, Action callBack = null)
+        public void BuyProductID(string productId, string ssoid, string purchaseID, Action callBack = null)
         {
             // If Purchasing has been initialized ...
             if (IsInitialized())
@@ -129,9 +129,11 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
                 {
                     m_loading.SetActive(true);
                 }
+            m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedAccountId(ssoid.Trim());
+            m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedProfileId(purchaseID.Trim());
             // ... look up the Product reference with the general product identifier and the Purchasing 
             // system's products collection.
-             Product product = m_StoreController.products.WithID(productId);
+            Product product = m_StoreController.products.WithID(productId);
                 // If the look up found a product for this device's store and that product is ready to be sold ... 
                 if (product != null && product.availableToPurchase)
                 {
@@ -211,8 +213,6 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         // Store specific subsystem, for accessing device-specific store features.
        extensions.GetExtension<IGooglePlayStoreExtensions>();
           m_StoreExtensionProvider = extensions;
-          m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedAccountId("id-test-na");
-          m_StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>().SetObfuscatedProfileId("id-profile-na");
         shop.SetActive(true);
         }
 

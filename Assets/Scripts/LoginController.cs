@@ -6,8 +6,6 @@ using Scripts.Session;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using System;
-using GoogleMobileAds.Api;
-using Facebook.Unity;
 #if UNITY_IOS
 using AppleAuth;
 using AppleAuth.Native;
@@ -37,20 +35,7 @@ public class LoginController : MonoBehaviour
             }
             MobileAds.Initialize(initStatus => { });
 #endif
-#if !UNITY_EDITOR
-            if (!FB.IsInitialized)
-            { 
-                    FB.Init(() =>
-                    {
-                        FB.ActivateApp();
-                    });
-            }
-#else
-            if (!FB.IsInitialized)
-            { 
-                FB.Init();
-            }
-#endif
+  
         }
         catch (Exception e)
         {
@@ -120,21 +105,7 @@ public class LoginController : MonoBehaviour
         //StartCoroutine(OnStartConnect());
     }
 
-    private IEnumerator OnStartConnect()
-    {
-        var i = 0;
-        while (i >= 10)
-        {
-            if (FB.IsInitialized)
-            {
-                break;
-            }
-            yield return new WaitForSeconds(1f);
-            i++;
-        }
 
-        _ = NakamaSessionManager.Instance.ConnectAsync();
-    }
 
     private void OnLoginFail()
     {
